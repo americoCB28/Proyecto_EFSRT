@@ -4,6 +4,7 @@ public class ResumenPedidoReciente {
 
     private String tipoServicio;
     private int idReferencia;
+    private int idCliente;
     private String nombreCliente;
     private String detalle;
     private String fechaPedido;
@@ -23,6 +24,14 @@ public class ResumenPedidoReciente {
 
     public void setIdReferencia(int idReferencia) {
         this.idReferencia = idReferencia;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNombreCliente() {

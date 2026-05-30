@@ -63,6 +63,34 @@ public class PedidoDAO {
         return listarPedidosPolarizadoPorCliente(null);
     }
 
+    public List<Pedido> listarPedidosPolarizadoPorClienteId(int idCliente) {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT p.idPedido, p.material, p.luzVisible, p.estado, p.fechaPedido, c.nombre " +
+                "FROM pedidos p JOIN clientes c ON p.idCliente = c.idCliente " +
+                "WHERE p.idCliente = ? ORDER BY p.fechaPedido DESC";
+        try (
+                Connection conn = ConexionDB.getConexion();
+                PreparedStatement ps = conn.prepareStatement(sql)
+        ) {
+            ps.setInt(1, idCliente);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Pedido pedido = new Pedido();
+                    pedido.setIdPedido(rs.getInt("idPedido"));
+                    pedido.setMaterial(rs.getString("material"));
+                    pedido.setLuzVisible(rs.getString("luzVisible"));
+                    pedido.setEstado(rs.getString("estado"));
+                    pedido.setFechaPedido(rs.getString("fechaPedido"));
+                    pedido.setNombreCliente(rs.getString("nombre"));
+                    pedidos.add(pedido);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al listar pedidos polarizado por cliente: " + e.getMessage());
+        }
+        return pedidos;
+    }
+
     public List<Pedido> listarPedidosPolarizadoPorCliente(String filtroCliente) {
         return listarPedidosPolarizadoFiltrados(filtroCliente, null);
     }
@@ -104,6 +132,33 @@ public class PedidoDAO {
         return listarPedidosLogotipoPorCliente(null);
     }
 
+    public List<PedidoLogotipo> listarPedidosLogotipoPorClienteId(int idCliente) {
+        List<PedidoLogotipo> pedidos = new ArrayList<>();
+        String sql = "SELECT pl.idPedidoLogotipo, pl.servicioSeleccionado, pl.estado, pl.fechaPedido, c.nombre " +
+                "FROM pedidosLogotipo pl JOIN clientes c ON pl.idCliente = c.idCliente " +
+                "WHERE pl.idCliente = ? ORDER BY pl.fechaPedido DESC";
+        try (
+                Connection conn = ConexionDB.getConexion();
+                PreparedStatement ps = conn.prepareStatement(sql)
+        ) {
+            ps.setInt(1, idCliente);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    PedidoLogotipo pedido = new PedidoLogotipo();
+                    pedido.setIdPedidoLogotipo(rs.getInt("idPedidoLogotipo"));
+                    pedido.setServicioSeleccionado(rs.getString("servicioSeleccionado"));
+                    pedido.setEstado(rs.getString("estado"));
+                    pedido.setFechaPedido(rs.getString("fechaPedido"));
+                    pedido.setNombreCliente(rs.getString("nombre"));
+                    pedidos.add(pedido);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al listar pedidos logotipo por cliente: " + e.getMessage());
+        }
+        return pedidos;
+    }
+
     public List<PedidoLogotipo> listarPedidosLogotipoPorCliente(String filtroCliente) {
         return listarPedidosLogotipoFiltrados(filtroCliente, null);
     }
@@ -142,6 +197,33 @@ public class PedidoDAO {
 
     public List<PedidoInstalacion> listarPedidosInstalacion() {
         return listarPedidosInstalacionPorCliente(null);
+    }
+
+    public List<PedidoInstalacion> listarPedidosInstalacionPorClienteId(int idCliente) {
+        List<PedidoInstalacion> pedidos = new ArrayList<>();
+        String sql = "SELECT pi.idPedidoInstalacion, pi.servicioSeleccionado, pi.estado, pi.fechaPedido, c.nombre " +
+                "FROM pedidosInstalaciones pi JOIN clientes c ON pi.idCliente = c.idCliente " +
+                "WHERE pi.idCliente = ? ORDER BY pi.fechaPedido DESC";
+        try (
+                Connection conn = ConexionDB.getConexion();
+                PreparedStatement ps = conn.prepareStatement(sql)
+        ) {
+            ps.setInt(1, idCliente);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    PedidoInstalacion pedido = new PedidoInstalacion();
+                    pedido.setIdPedidoInstalacion(rs.getInt("idPedidoInstalacion"));
+                    pedido.setServicioSeleccionado(rs.getString("servicioSeleccionado"));
+                    pedido.setEstado(rs.getString("estado"));
+                    pedido.setFechaPedido(rs.getString("fechaPedido"));
+                    pedido.setNombreCliente(rs.getString("nombre"));
+                    pedidos.add(pedido);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al listar pedidos instalacion por cliente: " + e.getMessage());
+        }
+        return pedidos;
     }
 
     public List<PedidoInstalacion> listarPedidosInstalacionPorCliente(String filtroCliente) {

@@ -114,6 +114,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Accion</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -122,6 +123,10 @@
                 <tr>
                     <td><%= c.getIdCliente() %></td>
                     <td><%= c.getNombre() %></td>
+                    <td>
+                        <a href="servicio?tipo=historialCliente&idCliente=<%= c.getIdCliente() %>"
+                           class="app-button app-button-outline app-button-sm">Ver historial</a>
+                    </td>
                 </tr>
                 <% }
                 } %>

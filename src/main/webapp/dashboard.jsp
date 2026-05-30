@@ -83,6 +83,7 @@
                     <th>Detalle</th>
                     <th>Estado</th>
                     <th>Fecha</th>
+                    <th>Accion</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -95,6 +96,10 @@
                     <td><%= pedido.getDetalle() %></td>
                     <td><span class="status-pill status-<%= pedido.getEstado() %>"><%= pedido.getEstado() %></span></td>
                     <td><%= pedido.getFechaPedido() %></td>
+                    <td>
+                        <a href="servicio?tipo=historialCliente&idCliente=<%= pedido.getIdCliente() %>"
+                           class="app-button app-button-outline app-button-sm">Historial</a>
+                    </td>
                 </tr>
                 <% }
                 } %>

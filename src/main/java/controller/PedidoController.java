@@ -67,6 +67,11 @@ public class PedidoController extends HttpServlet {
             return;
         }
 
+        if ("historialCliente".equals(tipo)) {
+            mostrarHistorialCliente(request, response);
+            return;
+        }
+
         if ("exportarCsv".equals(tipo)) {
             exportarCsv(request, response);
             return;
@@ -340,6 +345,33 @@ public class PedidoController extends HttpServlet {
         request.setAttribute("flashSuccess", SessionUtil.consumirFlashSuccess(request));
         request.setAttribute("flashWarning", SessionUtil.consumirFlashWarning(request));
         request.setAttribute("flashError", SessionUtil.consumirFlashError(request));
+    }
+
+    private void mostrarHistorialCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String idClienteParam = request.getParameter("idCliente");
+        if (!InputValidator.esIdPositivo(idClienteParam)) {
+            SessionUtil.guardarFlashWarning(request, "El cliente solicitado no es valido.");
+            response.sendRedirect("servicio?tipo=reportes");
+            return;
+        }
+
+        int idCliente = Integer.parseInt(idClienteParam);
+        Cliente cliente = clienteDAO.buscarClientePorId(idCliente);
+        if (cliente == null) {
+            SessionUtil.guardarFlashWarning(request, "No se encontro el cliente solicitado.");
+            response.sendRedirect("servicio?tipo=reportes");
+            return;
+        }
+
+        request.setAttribute("clienteHistorial", cliente);
+        request.setAttribute("pedidos", pedidoDAO.listarPedidosPolarizadoPorClienteId(idCliente));
+        request.setAttribute("pedidosLogotipo", pedidoDAO.listarPedidosLogotipoPorClienteId(idCliente));
+        request.setAttribute("pedidosInstalacion", pedidoDAO.listarPedidosInstalacionPorClienteId(idCliente));
+        request.setAttribute("flashSuccess", SessionUtil.consumirFlashSuccess(request));
+        request.setAttribute("flashWarning", SessionUtil.consumirFlashWarning(request));
+        request.setAttribute("flashError", SessionUtil.consumirFlashError(request));
+        request.getRequestDispatcher("/historialCliente.jsp").forward(request, response);
     }
 
     private String normalizarFiltroServicio(String valor) {

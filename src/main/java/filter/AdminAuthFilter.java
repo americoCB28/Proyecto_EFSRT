@@ -18,6 +18,7 @@ public class AdminAuthFilter implements Filter {
             "dashboard",
             "reportes",
             "exportarCsv",
+            "historialCliente",
             "actualizarReporte",
             "actualizarCliente",
             "actualizarPolarizado",

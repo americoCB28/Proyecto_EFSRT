@@ -33,6 +33,7 @@ public class DashboardDAO {
                 SELECT *
                 FROM (
                     SELECT 'Polarizado' AS tipoServicio, p.idPedido AS idReferencia,
+                           c.idCliente AS idCliente,
                            c.nombre AS nombreCliente,
                            CONCAT(p.material, ' / ', p.luzVisible) AS detalle,
                            p.estado AS estado,
@@ -41,6 +42,7 @@ public class DashboardDAO {
                     JOIN clientes c ON p.idCliente = c.idCliente
                     UNION ALL
                     SELECT 'Logotipo' AS tipoServicio, pl.idPedidoLogotipo AS idReferencia,
+                           c.idCliente AS idCliente,
                            c.nombre AS nombreCliente,
                            pl.servicioSeleccionado AS detalle,
                            pl.estado AS estado,
@@ -49,6 +51,7 @@ public class DashboardDAO {
                     JOIN clientes c ON pl.idCliente = c.idCliente
                     UNION ALL
                     SELECT 'Instalacion' AS tipoServicio, pi.idPedidoInstalacion AS idReferencia,
+                           c.idCliente AS idCliente,
                            c.nombre AS nombreCliente,
                            pi.servicioSeleccionado AS detalle,
                            pi.estado AS estado,
@@ -69,6 +72,7 @@ public class DashboardDAO {
                     ResumenPedidoReciente pedido = new ResumenPedidoReciente();
                     pedido.setTipoServicio(rs.getString("tipoServicio"));
                     pedido.setIdReferencia(rs.getInt("idReferencia"));
+                    pedido.setIdCliente(rs.getInt("idCliente"));
                     pedido.setNombreCliente(rs.getString("nombreCliente"));
                     pedido.setDetalle(rs.getString("detalle"));
                     pedido.setEstado(rs.getString("estado"));

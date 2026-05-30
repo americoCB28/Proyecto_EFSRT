@@ -332,6 +332,12 @@ body.app-body {
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
+.app-button-sm {
+  min-height: 38px;
+  padding: 8px 14px;
+  font-size: 0.88rem;
+}
+
 .app-button:hover {
   transform: translateY(-1px);
 }
@@ -606,6 +612,35 @@ body.app-body {
   margin-top: 18px;
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.detail-card {
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detail-label {
+  color: #8ea4c3;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.detail-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
 }
 
 @media (max-width: 767px) {
