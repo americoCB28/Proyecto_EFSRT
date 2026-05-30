@@ -471,6 +471,20 @@ body.app-body {
   justify-content: flex-end;
 }
 
+.user-form-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 1.2fr) minmax(240px, 1.2fr) auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.table-note {
+  display: inline-flex;
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -679,6 +693,10 @@ body.app-body {
   }
 
   .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-form-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -27,6 +27,7 @@
         </div>
         <div class="topbar-actions">
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
+            <a href="usuarios" class="app-button app-button-info">Usuarios</a>
             <a href="servicio?tipo=reportes" class="app-button app-button-info">Volver a Reportes</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
         </div>

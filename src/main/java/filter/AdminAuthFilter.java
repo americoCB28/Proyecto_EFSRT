@@ -11,7 +11,7 @@ import util.SessionUtil;
 import java.io.IOException;
 import java.util.Set;
 
-@WebFilter(urlPatterns = {"/servicio", "/reportes.jsp", "/actualizarReporte.jsp"})
+@WebFilter(urlPatterns = {"/servicio", "/usuarios", "/reportes.jsp", "/actualizarReporte.jsp"})
 public class AdminAuthFilter implements Filter {
 
     private static final Set<String> TIPOS_PROTEGIDOS = Set.of(
@@ -51,6 +51,10 @@ public class AdminAuthFilter implements Filter {
     private boolean requiereAutenticacion(HttpServletRequest request) {
         String servletPath = request.getServletPath();
         if ("/reportes.jsp".equals(servletPath) || "/actualizarReporte.jsp".equals(servletPath)) {
+            return true;
+        }
+
+        if ("/usuarios".equals(servletPath)) {
             return true;
         }
 

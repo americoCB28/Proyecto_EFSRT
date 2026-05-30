@@ -29,6 +29,7 @@
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
             <% if (admin) { %>
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
+            <a href="usuarios" class="app-button app-button-info">Usuarios</a>
             <a href="servicio?tipo=reportes" class="app-button app-button-outline">Reportes</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
             <% } else { %>
@@ -101,6 +102,9 @@
             </div>
 
             <div class="hero-actions">
+                <% if (admin) { %>
+                <a href="usuarios" class="app-button app-button-info">Gestionar Usuarios</a>
+                <% } %>
                 <a href="servicio?tipo=reportes" class="app-button app-button-outline">Ver Reportes</a>
             </div>
         </div>

@@ -28,6 +28,7 @@ public final class InputValidator {
             "terminado",
             "cancelado"
     );
+    private static final String USERNAME_REGEX = "^[A-Za-z0-9._-]{3,50}$";
 
     private InputValidator() {
     }
@@ -73,5 +74,17 @@ public final class InputValidator {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static boolean esUsernameValido(String username) {
+        return username != null && username.matches(USERNAME_REGEX);
+    }
+
+    public static String normalizarUsername(String username) {
+        return username == null ? null : username.trim();
+    }
+
+    public static boolean esPasswordAdminValida(String password) {
+        return password != null && password.length() >= 8;
     }
 }
