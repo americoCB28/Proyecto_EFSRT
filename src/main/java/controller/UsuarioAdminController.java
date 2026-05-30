@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Usuario;
+import util.CsrfUtil;
 import util.InputValidator;
 import util.PasswordUtil;
 import util.SessionUtil;
@@ -28,6 +29,12 @@ public class UsuarioAdminController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!CsrfUtil.esTokenValido(request)) {
+            SessionUtil.guardarFlashError(request, "La solicitud administrativa no es valida o ha expirado.");
+            response.sendRedirect(request.getContextPath() + "/usuarios");
+            return;
+        }
+
         String accion = request.getParameter("accion");
 
         if ("crear".equals(accion)) {

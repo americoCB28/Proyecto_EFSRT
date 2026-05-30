@@ -4,6 +4,7 @@
 <%@ page import="model.Pedido" %>
 <%@ page import="model.PedidoLogotipo" %>
 <%@ page import="model.PedidoInstalacion" %>
+<%@ page import="util.CsrfUtil" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,7 @@
     List<Pedido> pedidos = (List<Pedido>) request.getAttribute("pedidos");
     List<PedidoLogotipo> pedidosLogotipo = (List<PedidoLogotipo>) request.getAttribute("pedidosLogotipo");
     List<PedidoInstalacion> pedidosInstalacion = (List<PedidoInstalacion>) request.getAttribute("pedidosInstalacion");
+    String csrfToken = CsrfUtil.obtenerToken(request);
 %>
 
 <nav class="app-topbar">
@@ -63,6 +65,7 @@
                         <form action="servicio" method="post">
                             <input type="hidden" name="tipo" value="actualizarCliente">
                             <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
+                            <input type="hidden" name="<%= CsrfUtil.CSRF_REQUEST_PARAM %>" value="<%= csrfToken %>">
                             <input type="text" name="nombre" value="<%= c.getNombre() %>" class="form-control app-field">
                     </td>
                     <td>
@@ -72,6 +75,7 @@
                         <form action="servicio" method="post" onsubmit="return confirm('Seguro que deseas eliminar este cliente y todos sus pedidos?')">
                             <input type="hidden" name="tipo" value="eliminarCliente">
                             <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
+                            <input type="hidden" name="<%= CsrfUtil.CSRF_REQUEST_PARAM %>" value="<%= csrfToken %>">
                             <button type="submit" class="app-button app-button-danger-outline">Eliminar</button>
                         </form>
                             </div>
@@ -108,6 +112,7 @@
                     <form action="servicio" method="post">
                         <input type="hidden" name="tipo" value="actualizarPolarizado">
                         <input type="hidden" name="idPedido" value="<%= p.getIdPedido() %>">
+                        <input type="hidden" name="<%= CsrfUtil.CSRF_REQUEST_PARAM %>" value="<%= csrfToken %>">
                         <td><%= p.getIdPedido() %></td>
                         <td><%= p.getNombreCliente() %></td>
                         <td>
@@ -167,6 +172,7 @@
                     <form action="servicio" method="post">
                         <input type="hidden" name="tipo" value="actualizarLogotipo">
                         <input type="hidden" name="idPedidoLogotipo" value="<%= pl.getIdPedidoLogotipo() %>">
+                        <input type="hidden" name="<%= CsrfUtil.CSRF_REQUEST_PARAM %>" value="<%= csrfToken %>">
                         <td><%= pl.getIdPedidoLogotipo() %></td>
                         <td><%= pl.getNombreCliente() %></td>
                         <td>
@@ -221,6 +227,7 @@
                     <form action="servicio" method="post">
                         <input type="hidden" name="tipo" value="actualizarInstalacion">
                         <input type="hidden" name="idPedidoInstalacion" value="<%= pi.getIdPedidoInstalacion() %>">
+                        <input type="hidden" name="<%= CsrfUtil.CSRF_REQUEST_PARAM %>" value="<%= csrfToken %>">
                         <td><%= pi.getIdPedidoInstalacion() %></td>
                         <td><%= pi.getNombreCliente() %></td>
                         <td>

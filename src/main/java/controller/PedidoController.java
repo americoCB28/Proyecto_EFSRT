@@ -13,6 +13,7 @@ import model.Pedido;
 import model.PedidoInstalacion;
 import model.PedidoLogotipo;
 import model.ResumenPedidoReciente;
+import util.CsrfUtil;
 import util.InputValidator;
 import util.SessionUtil;
 
@@ -85,6 +86,12 @@ public class PedidoController extends HttpServlet {
             throws ServletException, IOException {
         String tipo = request.getParameter("tipo");
 
+        if (requiereCsrfAdministrativo(tipo) && !CsrfUtil.esTokenValido(request)) {
+            SessionUtil.guardarFlashError(request, "La solicitud administrativa no es valida o ha expirado.");
+            response.sendRedirect("servicio?tipo=reportes");
+            return;
+        }
+
         if ("logotipos".equals(tipo)) {
             registrarPedidoLogotipo(request, response);
             return;
@@ -126,6 +133,14 @@ public class PedidoController extends HttpServlet {
         }
 
         response.sendRedirect("inicio");
+    }
+
+    private boolean requiereCsrfAdministrativo(String tipo) {
+        return "actualizarCliente".equals(tipo)
+                || "actualizarPolarizado".equals(tipo)
+                || "actualizarLogotipo".equals(tipo)
+                || "actualizarInstalacion".equals(tipo)
+                || "eliminarCliente".equals(tipo);
     }
 
     private void registrarPedidoLogotipo(HttpServletRequest request, HttpServletResponse response)

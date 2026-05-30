@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="model.Usuario" %>
+<%@ page import="util.CsrfUtil" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,7 @@
     if (nuevoUsername == null) {
         nuevoUsername = "";
     }
+    String csrfToken = CsrfUtil.obtenerToken(request);
     List<Usuario> usuarios = (List<Usuario>) request.getAttribute("usuarios");
     Usuario usuarioActual = (Usuario) request.getAttribute("usuarioActual");
 %>
@@ -61,6 +63,7 @@
         </div>
         <form action="usuarios" method="post" class="user-form-grid">
             <input type="hidden" name="accion" value="crear">
+            <input type="hidden" name="<%= CsrfUtil.CSRF_REQUEST_PARAM %>" value="<%= csrfToken %>">
             <div>
                 <label for="username" class="form-label">Username</label>
                 <input type="text" id="username" name="username" value="<%= nuevoUsername %>"
@@ -119,6 +122,7 @@
                             <input type="hidden" name="accion" value="toggle">
                             <input type="hidden" name="idUsuario" value="<%= usuario.getIdUsuario() %>">
                             <input type="hidden" name="activo" value="<%= usuario.isActivo() ? "0" : "1" %>">
+                            <input type="hidden" name="<%= CsrfUtil.CSRF_REQUEST_PARAM %>" value="<%= csrfToken %>">
                             <button type="submit"
                                     class="app-button <%= usuario.isActivo() ? "app-button-danger-outline" : "app-button-success" %> app-button-sm">
                                 <%= usuario.isActivo() ? "Desactivar" : "Activar" %>
