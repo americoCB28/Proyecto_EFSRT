@@ -58,6 +58,17 @@ CREATE TABLE IF NOT EXISTS pedidosInstalaciones (
     ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS usuarios (
+  idUsuario INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  passwordHash VARCHAR(255) NOT NULL,
+  rol VARCHAR(20) NOT NULL,
+  activo TINYINT(1) NOT NULL DEFAULT 1,
+  fechaCreacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (idUsuario),
+  UNIQUE KEY uk_usuarios_username (username)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 INSERT INTO servicios (idServicio, logotipos, polarizado, instalaciones)
 SELECT 1, 'Solicitar', 'Solicitar', 'Solicitar'
 WHERE NOT EXISTS (
@@ -98,4 +109,10 @@ INSERT INTO pedidosInstalaciones (idPedidoInstalacion, idCliente, servicioSelecc
 SELECT 1, 3, 'Tapizado de Techo', CURRENT_TIMESTAMP
 WHERE NOT EXISTS (
   SELECT 1 FROM pedidosInstalaciones WHERE idPedidoInstalacion = 1
+);
+
+INSERT INTO usuarios (idUsuario, username, passwordHash, rol, activo)
+SELECT 1, 'admin', '65536:R933u4hPpg+opiuCr70eug==:yklbRsi08MvwypzCmYc3rqDrfy4xK/ZPGIl5w16UgTI=', 'ADMIN', 1
+WHERE NOT EXISTS (
+  SELECT 1 FROM usuarios WHERE idUsuario = 1
 );

@@ -16,7 +16,10 @@
 <nav class="navbar navbar-dark border-bottom border-secondary" style="background-color: #1a1a1a;">
     <div class="container">
         <span class="navbar-brand fw-bold fs-4 text-white">📊 Panel de Reportes</span>
-        <a href="inicio" class="btn btn-outline-light btn-sm">← Volver al inicio</a>
+        <div class="d-flex gap-2">
+            <a href="inicio" class="btn btn-outline-light btn-sm">← Volver al inicio</a>
+            <a href="logout" class="btn btn-outline-warning btn-sm">Cerrar sesión</a>
+        </div>
     </div>
 </nav>
 
