@@ -1,81 +1,101 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2026 a las 04:57:04
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+CREATE DATABASE IF NOT EXISTS db_gestion_servicios
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+USE db_gestion_servicios;
 
+CREATE TABLE IF NOT EXISTS clientes (
+  idCliente INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(100) NOT NULL,
+  PRIMARY KEY (idCliente)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+CREATE TABLE IF NOT EXISTS servicios (
+  idServicio INT NOT NULL AUTO_INCREMENT,
+  logotipos VARCHAR(100) NOT NULL,
+  polarizado VARCHAR(100) NOT NULL,
+  instalaciones VARCHAR(100) NOT NULL,
+  PRIMARY KEY (idServicio)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Base de datos: `db_gestion_servicios`
---
+CREATE TABLE IF NOT EXISTS pedidos (
+  idPedido INT NOT NULL AUTO_INCREMENT,
+  material VARCHAR(50) NOT NULL,
+  luzVisible VARCHAR(10) NOT NULL,
+  idCliente INT NOT NULL,
+  fechaPedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (idPedido),
+  KEY idx_pedidos_idCliente (idCliente),
+  CONSTRAINT fk_pedidos_clientes
+    FOREIGN KEY (idCliente) REFERENCES clientes (idCliente)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS pedidosLogotipo (
+  idPedidoLogotipo INT NOT NULL AUTO_INCREMENT,
+  idCliente INT NOT NULL,
+  servicioSeleccionado VARCHAR(100) NOT NULL,
+  fechaPedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (idPedidoLogotipo),
+  KEY idx_pedidosLogotipo_idCliente (idCliente),
+  CONSTRAINT fk_pedidosLogotipo_clientes
+    FOREIGN KEY (idCliente) REFERENCES clientes (idCliente)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Estructura de tabla para la tabla `clientes`
---
+CREATE TABLE IF NOT EXISTS pedidosInstalaciones (
+  idPedidoInstalacion INT NOT NULL AUTO_INCREMENT,
+  idCliente INT NOT NULL,
+  servicioSeleccionado VARCHAR(100) NOT NULL,
+  fechaPedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (idPedidoInstalacion),
+  KEY idx_pedidosInstalaciones_idCliente (idCliente),
+  CONSTRAINT fk_pedidosInstalaciones_clientes
+    FOREIGN KEY (idCliente) REFERENCES clientes (idCliente)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `clientes` (
-  `idCliente` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+INSERT INTO servicios (idServicio, logotipos, polarizado, instalaciones)
+SELECT 1, 'Solicitar', 'Solicitar', 'Solicitar'
+WHERE NOT EXISTS (
+  SELECT 1 FROM servicios WHERE idServicio = 1
+);
 
---
--- Volcado de datos para la tabla `clientes`
---
+INSERT INTO clientes (idCliente, nombre)
+SELECT 1, 'Cliente Demo Polarizado'
+WHERE NOT EXISTS (
+  SELECT 1 FROM clientes WHERE idCliente = 1
+);
 
-INSERT INTO `clientes` (`idCliente`, `nombre`) VALUES
-(1, 'Pedro'),
-(3, 'Ramon'),
-(5, 'pedro'),
-(8, 'Mario'),
-(9, 'Manuel'),
-(10, 'Alejandro'),
-(11, 'Alonzo'),
-(12, 'Ramiro'),
-(13, 'Walter'),
-(14, 'Nemesio'),
-(15, 'Oracio'),
-(16, 'Joel'),
-(17, 'jeferson'),
-(18, 'Miguel'),
-(19, 'Michael'),
-(20, 'Jhon'),
-(21, 'Alex');
+INSERT INTO clientes (idCliente, nombre)
+SELECT 2, 'Cliente Demo Logotipo'
+WHERE NOT EXISTS (
+  SELECT 1 FROM clientes WHERE idCliente = 2
+);
 
---
--- Índices para tablas volcadas
---
+INSERT INTO clientes (idCliente, nombre)
+SELECT 3, 'Cliente Demo Instalacion'
+WHERE NOT EXISTS (
+  SELECT 1 FROM clientes WHERE idCliente = 3
+);
 
---
--- Indices de la tabla `clientes`
---
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`idCliente`);
+INSERT INTO pedidos (idPedido, material, luzVisible, idCliente, fechaPedido)
+SELECT 1, 'nanoCarbono', '35%', 1, CURRENT_TIMESTAMP
+WHERE NOT EXISTS (
+  SELECT 1 FROM pedidos WHERE idPedido = 1
+);
 
---
--- AUTO_INCREMENT de las tablas volcadas
---
+INSERT INTO pedidosLogotipo (idPedidoLogotipo, idCliente, servicioSeleccionado, fechaPedido)
+SELECT 1, 2, 'Placa Provisional', CURRENT_TIMESTAMP
+WHERE NOT EXISTS (
+  SELECT 1 FROM pedidosLogotipo WHERE idPedidoLogotipo = 1
+);
 
---
--- AUTO_INCREMENT de la tabla `clientes`
---
-ALTER TABLE `clientes`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO pedidosInstalaciones (idPedidoInstalacion, idCliente, servicioSeleccionado, fechaPedido)
+SELECT 1, 3, 'Tapizado de Techo', CURRENT_TIMESTAMP
+WHERE NOT EXISTS (
+  SELECT 1 FROM pedidosInstalaciones WHERE idPedidoInstalacion = 1
+);

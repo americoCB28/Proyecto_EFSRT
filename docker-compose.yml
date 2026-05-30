@@ -1,0 +1,30 @@
+services:
+  app:
+    build: .
+    container_name: proyecto_efsrt_app
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: db_gestion_servicios
+      DB_USER: root
+      DB_PASSWORD: root123
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: proyecto_efsrt_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: db_gestion_servicios
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./clientes.sql:/docker-entrypoint-initdb.d/clientes.sql
+
+volumes:
+  mysql_data:
