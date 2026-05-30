@@ -6,6 +6,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+<%
+    String tituloConfirmacion = (String) request.getAttribute("tituloConfirmacion");
+    String mensajeConfirmacion = (String) request.getAttribute("mensajeConfirmacion");
+    String areaConfirmacion = (String) request.getAttribute("areaConfirmacion");
+    String rutaNuevoPedido = (String) request.getAttribute("rutaNuevoPedido");
+%>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -15,8 +21,15 @@
                     Tapasol / Polarizado
                 </div>
                 <div class="card-body py-5">
-                    <h1 class="fw-bold text-primary">Por favor aproximarse al área de Polarizado</h1>
-                    <a href="inicio" class="btn btn-primary mt-4 px-4">Volver al inicio</a>
+                    <div class="alert alert-success" role="alert">
+                        <strong><%= tituloConfirmacion %></strong><br>
+                        <span><%= mensajeConfirmacion %></span>
+                    </div>
+                    <h1 class="fw-bold text-primary"><%= areaConfirmacion %></h1>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                        <a href="inicio" class="btn btn-primary px-4">Volver al inicio</a>
+                        <a href="<%= rutaNuevoPedido %>" class="btn btn-outline-primary px-4">Registrar otro pedido</a>
+                    </div>
                 </div>
             </div>
         </div>

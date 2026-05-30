@@ -10,6 +10,7 @@ public final class SessionUtil {
     public static final String PENDING_REDIRECT = "pendingRedirect";
     public static final String FLASH_ERROR = "flashError";
     public static final String FLASH_SUCCESS = "flashSuccess";
+    public static final String FLASH_WARNING = "flashWarning";
 
     private SessionUtil() {
     }
@@ -73,6 +74,14 @@ public final class SessionUtil {
 
     public static String consumirFlashSuccess(HttpServletRequest request) {
         return consumirFlash(request, FLASH_SUCCESS);
+    }
+
+    public static void guardarFlashWarning(HttpServletRequest request, String message) {
+        guardarFlash(request, FLASH_WARNING, message);
+    }
+
+    public static String consumirFlashWarning(HttpServletRequest request) {
+        return consumirFlash(request, FLASH_WARNING);
     }
 
     private static void guardarFlash(HttpServletRequest request, String key, String message) {

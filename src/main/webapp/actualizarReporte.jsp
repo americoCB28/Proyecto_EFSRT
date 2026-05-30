@@ -12,28 +12,29 @@
 </head>
 <body style="background-color: #111111;">
 
-<!-- Navbar -->
 <nav class="navbar navbar-dark border-bottom border-secondary" style="background-color: #1a1a1a;">
     <div class="container">
-        <span class="navbar-brand fw-bold fs-4 text-white">✏️ Actualizar Reportes</span>
+        <span class="navbar-brand fw-bold fs-4 text-white">Actualizar Reportes</span>
         <div class="d-flex gap-2">
-            <a href="servicio?tipo=reportes" class="btn btn-outline-light btn-sm">← Volver a Reportes</a>
-            <a href="logout" class="btn btn-outline-warning btn-sm">Cerrar sesión</a>
+            <a href="servicio?tipo=reportes" class="btn btn-outline-light btn-sm">Volver a Reportes</a>
+            <a href="logout" class="btn btn-outline-warning btn-sm">Cerrar sesion</a>
         </div>
     </div>
 </nav>
 
 <div class="container py-5">
+    <div class="alert alert-info border-0 shadow-sm" role="alert">
+        Estas en modo de actualizacion. Guarda tus cambios y regresaras al panel de reportes con un mensaje de confirmacion.
+    </div>
 
-    <!-- Clientes -->
     <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
         <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
-            👥 Clientes Registrados
+            Clientes Registrados
         </div>
         <div class="card-body p-0">
             <table class="table table-dark table-striped table-hover mb-0">
                 <thead>
-                    <tr><th class="text-secondary">ID</th><th class="text-secondary">Nombre</th><th class="text-secondary">Guardar</th><th class="text-secondary">Eliminar</th></tr>
+                <tr><th class="text-secondary">ID</th><th class="text-secondary">Nombre</th><th class="text-secondary">Guardar</th><th class="text-secondary">Eliminar</th></tr>
                 </thead>
                 <tbody>
                 <%
@@ -47,12 +48,12 @@
                         <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
                         <td class="text-white-50"><%= c.getIdCliente() %></td>
                         <td><input type="text" name="nombre" value="<%= c.getNombre() %>" class="form-control form-control-sm bg-dark text-white border-secondary"></td>
-                        <td><button type="submit" class="btn btn-sm btn-outline-light">💾 Guardar</button></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-light">Guardar</button></td>
                     </form>
-                    <form action="servicio" method="post" onsubmit="return confirm('¿Seguro que deseas eliminar este cliente y todos sus pedidos?')">
+                    <form action="servicio" method="post" onsubmit="return confirm('Seguro que deseas eliminar este cliente y todos sus pedidos?')">
                         <input type="hidden" name="tipo" value="eliminarCliente">
                         <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
-                        <td><button type="submit" class="btn btn-sm btn-outline-danger">🗑️ Eliminar</button></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button></td>
                     </form>
                 </tr>
                 <%
@@ -64,15 +65,14 @@
         </div>
     </div>
 
-    <!-- Pedidos Polarizado -->
     <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
         <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
-            🚗 Pedidos - Polarizados
+            Pedidos - Polarizados
         </div>
         <div class="card-body p-0">
             <table class="table table-dark table-striped table-hover mb-0">
                 <thead>
-                    <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Material</th><th class="text-secondary">Luz Visible</th><th class="text-secondary">Fecha</th><th class="text-secondary">Acción</th></tr>
+                <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Material</th><th class="text-secondary">Luz Visible</th><th class="text-secondary">Fecha</th><th class="text-secondary">Accion</th></tr>
                 </thead>
                 <tbody>
                 <%
@@ -102,7 +102,7 @@
                             </select>
                         </td>
                         <td class="text-white-50"><%= p.getFechaPedido() %></td>
-                        <td><button type="submit" class="btn btn-sm btn-outline-light">💾 Guardar</button></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-light">Guardar</button></td>
                     </form>
                 </tr>
                 <%
@@ -114,15 +114,14 @@
         </div>
     </div>
 
-    <!-- Pedidos Logotipo -->
     <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
         <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
-            🎨 Pedidos - Logotipos
+            Pedidos - Logotipos
         </div>
         <div class="card-body p-0">
             <table class="table table-dark table-striped table-hover mb-0">
                 <thead>
-                    <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Servicio</th><th class="text-secondary">Fecha</th><th class="text-secondary">Acción</th></tr>
+                <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Servicio</th><th class="text-secondary">Fecha</th><th class="text-secondary">Accion</th></tr>
                 </thead>
                 <tbody>
                 <%
@@ -147,7 +146,7 @@
                             </select>
                         </td>
                         <td class="text-white-50"><%= pl.getFechaPedido() %></td>
-                        <td><button type="submit" class="btn btn-sm btn-outline-light">💾 Guardar</button></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-light">Guardar</button></td>
                     </form>
                 </tr>
                 <%
@@ -159,15 +158,14 @@
         </div>
     </div>
 
-    <!-- Pedidos Instalaciones -->
     <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
         <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
-            ⚡ Pedidos - Instalaciones
+            Pedidos - Instalaciones
         </div>
         <div class="card-body p-0">
             <table class="table table-dark table-striped table-hover mb-0">
                 <thead>
-                    <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Servicio</th><th class="text-secondary">Fecha</th><th class="text-secondary">Acción</th></tr>
+                <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Servicio</th><th class="text-secondary">Fecha</th><th class="text-secondary">Accion</th></tr>
                 </thead>
                 <tbody>
                 <%
@@ -191,7 +189,7 @@
                             </select>
                         </td>
                         <td class="text-white-50"><%= pi.getFechaPedido() %></td>
-                        <td><button type="submit" class="btn btn-sm btn-outline-light">💾 Guardar</button></td>
+                        <td><button type="submit" class="btn btn-sm btn-outline-light">Guardar</button></td>
                     </form>
                 </tr>
                 <%
@@ -202,7 +200,6 @@
             </table>
         </div>
     </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -12,6 +12,7 @@ import model.Pedido;
 import model.PedidoInstalacion;
 import model.PedidoLogotipo;
 import util.InputValidator;
+import util.SessionUtil;
 
 import java.io.IOException;
 
@@ -127,6 +128,10 @@ public class PedidoController extends HttpServlet {
         pedido.setServicioSeleccionado(servicioSeleccionado);
         pedidoDAO.crearPedidoLogotipo(pedido);
 
+        request.setAttribute("tituloConfirmacion", "Pedido registrado correctamente");
+        request.setAttribute("mensajeConfirmacion", "Tu solicitud de logotipo fue registrada. Puedes volver al inicio o registrar otro pedido.");
+        request.setAttribute("areaConfirmacion", "Por favor aproximarse al área de Diseño.");
+        request.setAttribute("rutaNuevoPedido", "servicio?tipo=logotipos");
         request.getRequestDispatcher("/confirmacionLogotipo.jsp").forward(request, response);
     }
 
@@ -152,6 +157,10 @@ public class PedidoController extends HttpServlet {
         pedido.setServicioSeleccionado(servicioSeleccionado);
         pedidoDAO.crearPedidoInstalacion(pedido);
 
+        request.setAttribute("tituloConfirmacion", "Pedido registrado correctamente");
+        request.setAttribute("mensajeConfirmacion", "Tu solicitud de instalación fue registrada. Puedes volver al inicio o registrar otro pedido.");
+        request.setAttribute("areaConfirmacion", "Por favor aproximarse al área de Instalaciones.");
+        request.setAttribute("rutaNuevoPedido", "servicio?tipo=instalaciones");
         request.getRequestDispatcher("/confirmacionInstalaciones.jsp").forward(request, response);
     }
 
@@ -180,6 +189,10 @@ public class PedidoController extends HttpServlet {
         pedido.setIdCliente(idCliente);
         pedidoDAO.crearPedidoPolarizado(pedido);
 
+        request.setAttribute("tituloConfirmacion", "Pedido registrado correctamente");
+        request.setAttribute("mensajeConfirmacion", "Tu solicitud de polarizado fue registrada. Puedes volver al inicio o registrar otro pedido.");
+        request.setAttribute("areaConfirmacion", "Por favor aproximarse al área de Polarizado.");
+        request.setAttribute("rutaNuevoPedido", "servicio?tipo=polarizado");
         request.getRequestDispatcher("/confirmacionPolarizado.jsp").forward(request, response);
     }
 
@@ -189,9 +202,12 @@ public class PedidoController extends HttpServlet {
 
         if (InputValidator.esIdPositivo(idCliente) && InputValidator.esNombreValido(nombre)) {
             clienteDAO.actualizarNombreCliente(Integer.parseInt(idCliente), nombre);
+            SessionUtil.guardarFlashSuccess(request, "Cliente actualizado correctamente.");
+        } else {
+            SessionUtil.guardarFlashWarning(request, "No se pudo actualizar el cliente. Verifica los datos enviados.");
         }
 
-        response.sendRedirect("servicio?tipo=actualizarReporte");
+        response.sendRedirect("servicio?tipo=reportes");
     }
 
     private void actualizarPolarizado(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -203,9 +219,12 @@ public class PedidoController extends HttpServlet {
                 && InputValidator.esMaterialValido(material)
                 && InputValidator.esLuzVisibleValida(luzVisible)) {
             pedidoDAO.actualizarPedidoPolarizado(Integer.parseInt(idPedido), material, luzVisible);
+            SessionUtil.guardarFlashSuccess(request, "Pedido de polarizado actualizado correctamente.");
+        } else {
+            SessionUtil.guardarFlashWarning(request, "No se pudo actualizar el pedido de polarizado. Verifica los datos enviados.");
         }
 
-        response.sendRedirect("servicio?tipo=actualizarReporte");
+        response.sendRedirect("servicio?tipo=reportes");
     }
 
     private void actualizarLogotipo(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -215,9 +234,12 @@ public class PedidoController extends HttpServlet {
         if (InputValidator.esIdPositivo(idPedidoLogotipo)
                 && InputValidator.esServicioLogotipoValido(servicioSeleccionado)) {
             pedidoDAO.actualizarPedidoLogotipo(Integer.parseInt(idPedidoLogotipo), servicioSeleccionado);
+            SessionUtil.guardarFlashSuccess(request, "Pedido de logotipo actualizado correctamente.");
+        } else {
+            SessionUtil.guardarFlashWarning(request, "No se pudo actualizar el pedido de logotipo. Verifica los datos enviados.");
         }
 
-        response.sendRedirect("servicio?tipo=actualizarReporte");
+        response.sendRedirect("servicio?tipo=reportes");
     }
 
     private void actualizarInstalacion(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -227,17 +249,23 @@ public class PedidoController extends HttpServlet {
         if (InputValidator.esIdPositivo(idPedidoInstalacion)
                 && InputValidator.esServicioInstalacionValido(servicioSeleccionado)) {
             pedidoDAO.actualizarPedidoInstalacion(Integer.parseInt(idPedidoInstalacion), servicioSeleccionado);
+            SessionUtil.guardarFlashSuccess(request, "Pedido de instalación actualizado correctamente.");
+        } else {
+            SessionUtil.guardarFlashWarning(request, "No se pudo actualizar el pedido de instalación. Verifica los datos enviados.");
         }
 
-        response.sendRedirect("servicio?tipo=actualizarReporte");
+        response.sendRedirect("servicio?tipo=reportes");
     }
 
     private void eliminarCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String idCliente = request.getParameter("idCliente");
         if (InputValidator.esIdPositivo(idCliente)) {
             clienteDAO.eliminarClientePorId(Integer.parseInt(idCliente));
+            SessionUtil.guardarFlashSuccess(request, "Cliente y pedidos relacionados eliminados correctamente.");
+        } else {
+            SessionUtil.guardarFlashWarning(request, "No se pudo eliminar el cliente solicitado.");
         }
-        response.sendRedirect("servicio?tipo=actualizarReporte");
+        response.sendRedirect("servicio?tipo=reportes");
     }
 
     private int crearCliente(String nombre) {
@@ -251,5 +279,8 @@ public class PedidoController extends HttpServlet {
         request.setAttribute("pedidos", pedidoDAO.listarPedidosPolarizado());
         request.setAttribute("pedidosLogotipo", pedidoDAO.listarPedidosLogotipo());
         request.setAttribute("pedidosInstalacion", pedidoDAO.listarPedidosInstalacion());
+        request.setAttribute("flashSuccess", SessionUtil.consumirFlashSuccess(request));
+        request.setAttribute("flashWarning", SessionUtil.consumirFlashWarning(request));
+        request.setAttribute("flashError", SessionUtil.consumirFlashError(request));
     }
 }
