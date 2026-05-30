@@ -16,6 +16,8 @@
     String flashSuccess = (String) request.getAttribute("flashSuccess");
     String flashWarning = (String) request.getAttribute("flashWarning");
     String flashError = (String) request.getAttribute("flashError");
+    String clienteFiltro = (String) request.getAttribute("clienteFiltro");
+    String servicioFiltro = (String) request.getAttribute("servicioFiltro");
     List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
     List<Pedido> pedidos = (List<Pedido>) request.getAttribute("pedidos");
     List<PedidoLogotipo> pedidosLogotipo = (List<PedidoLogotipo>) request.getAttribute("pedidosLogotipo");
@@ -30,6 +32,7 @@
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
+            <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
             <a href="servicio?tipo=actualizarReporte" class="app-button app-button-info">Modificar</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
         </div>
@@ -41,6 +44,33 @@
         <span class="eyebrow">Zona protegida</span>
         <h1 class="form-title mt-3">Reportes y seguimiento</h1>
         <p class="form-subtitle">Esta pantalla prioriza legibilidad, espaciado y navegacion clara para revisar la informacion actual.</p>
+    </section>
+
+    <section class="table-card">
+        <div class="table-title">
+            <h3>Filtros de reportes</h3>
+        </div>
+        <form action="servicio" method="get" class="filter-grid">
+            <input type="hidden" name="tipo" value="reportes">
+            <div>
+                <label class="form-label" for="cliente">Buscar por cliente</label>
+                <input type="text" id="cliente" name="cliente" value="<%= clienteFiltro == null ? "" : clienteFiltro %>"
+                       class="form-control app-field" placeholder="Ejemplo: Juan Perez">
+            </div>
+            <div>
+                <label class="form-label" for="servicioFiltro">Tipo de servicio</label>
+                <select id="servicioFiltro" name="servicioFiltro" class="form-select app-field">
+                    <option value="todos" <%= "todos".equals(servicioFiltro) ? "selected" : "" %>>Todos</option>
+                    <option value="polarizado" <%= "polarizado".equals(servicioFiltro) ? "selected" : "" %>>Polarizado</option>
+                    <option value="logotipo" <%= "logotipo".equals(servicioFiltro) ? "selected" : "" %>>Logotipo</option>
+                    <option value="instalacion" <%= "instalacion".equals(servicioFiltro) ? "selected" : "" %>>Instalacion</option>
+                </select>
+            </div>
+            <div class="filter-actions">
+                <button type="submit" class="app-button app-button-primary">Aplicar filtros</button>
+                <a href="servicio?tipo=reportes" class="app-button app-button-secondary">Limpiar</a>
+            </div>
+        </form>
     </section>
 
     <div class="flash-wrap">
@@ -82,6 +112,7 @@
         </div>
     </section>
 
+    <% if ("todos".equals(servicioFiltro) || "polarizado".equals(servicioFiltro)) { %>
     <section class="table-card">
         <div class="table-title">
             <h3>Pedidos de polarizado</h3>
@@ -113,7 +144,9 @@
             </table>
         </div>
     </section>
+    <% } %>
 
+    <% if ("todos".equals(servicioFiltro) || "logotipo".equals(servicioFiltro)) { %>
     <section class="table-card">
         <div class="table-title">
             <h3>Pedidos de logotipos</h3>
@@ -143,7 +176,9 @@
             </table>
         </div>
     </section>
+    <% } %>
 
+    <% if ("todos".equals(servicioFiltro) || "instalacion".equals(servicioFiltro)) { %>
     <section class="table-card">
         <div class="table-title">
             <h3>Pedidos de instalaciones</h3>
@@ -173,6 +208,7 @@
             </table>
         </div>
     </section>
+    <% } %>
 </main>
 </body>
 </html>

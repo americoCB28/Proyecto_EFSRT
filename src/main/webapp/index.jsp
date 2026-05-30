@@ -28,7 +28,8 @@
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
             <% if (admin) { %>
-            <a href="servicio?tipo=reportes" class="app-button app-button-info">Panel Admin</a>
+            <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
+            <a href="servicio?tipo=reportes" class="app-button app-button-outline">Reportes</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
             <% } else { %>
             <a href="login" class="app-button app-button-outline">Login Admin</a>

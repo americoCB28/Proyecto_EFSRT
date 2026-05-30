@@ -405,6 +405,60 @@ body.app-body {
   margin-top: 18px;
 }
 
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.stat-card-highlight {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(245, 158, 11, 0.16));
+}
+
+.stat-label {
+  color: #8ea4c3;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.stat-help {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) minmax(180px, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
 .table-title {
   display: flex;
   align-items: center;
@@ -549,5 +603,9 @@ body.app-body {
 
   .table-responsive-shell {
     overflow-x: auto;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
   }
 }

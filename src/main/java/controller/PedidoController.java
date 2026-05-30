@@ -1,6 +1,7 @@
 package controller;
 
 import dao.ClienteDAO;
+import dao.DashboardDAO;
 import dao.PedidoDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,16 +12,20 @@ import model.Cliente;
 import model.Pedido;
 import model.PedidoInstalacion;
 import model.PedidoLogotipo;
+import model.ResumenPedidoReciente;
 import util.InputValidator;
 import util.SessionUtil;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 @WebServlet("/servicio")
 public class PedidoController extends HttpServlet {
 
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final PedidoDAO pedidoDAO = new PedidoDAO();
+    private final DashboardDAO dashboardDAO = new DashboardDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -52,6 +57,12 @@ public class PedidoController extends HttpServlet {
         if ("actualizarReporte".equals(tipo)) {
             cargarDatosReporte(request);
             request.getRequestDispatcher("/actualizarReporte.jsp").forward(request, response);
+            return;
+        }
+
+        if ("dashboard".equals(tipo)) {
+            cargarDashboard(request);
+            request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
             return;
         }
 
@@ -275,12 +286,64 @@ public class PedidoController extends HttpServlet {
     }
 
     private void cargarDatosReporte(HttpServletRequest request) {
-        request.setAttribute("clientes", clienteDAO.listarClientes());
-        request.setAttribute("pedidos", pedidoDAO.listarPedidosPolarizado());
-        request.setAttribute("pedidosLogotipo", pedidoDAO.listarPedidosLogotipo());
-        request.setAttribute("pedidosInstalacion", pedidoDAO.listarPedidosInstalacion());
+        String filtroCliente = InputValidator.normalizarNombre(request.getParameter("cliente"));
+        String filtroServicio = normalizarFiltroServicio(request.getParameter("servicioFiltro"));
+
+        request.setAttribute("clienteFiltro", filtroCliente == null ? "" : filtroCliente);
+        request.setAttribute("servicioFiltro", filtroServicio);
+        request.setAttribute("clientes", clienteDAO.listarClientesPorNombre(filtroCliente));
+        request.setAttribute("pedidos", mostrarPolarizado(filtroServicio)
+                ? pedidoDAO.listarPedidosPolarizadoPorCliente(filtroCliente)
+                : Collections.emptyList());
+        request.setAttribute("pedidosLogotipo", mostrarLogotipo(filtroServicio)
+                ? pedidoDAO.listarPedidosLogotipoPorCliente(filtroCliente)
+                : Collections.emptyList());
+        request.setAttribute("pedidosInstalacion", mostrarInstalacion(filtroServicio)
+                ? pedidoDAO.listarPedidosInstalacionPorCliente(filtroCliente)
+                : Collections.emptyList());
         request.setAttribute("flashSuccess", SessionUtil.consumirFlashSuccess(request));
         request.setAttribute("flashWarning", SessionUtil.consumirFlashWarning(request));
         request.setAttribute("flashError", SessionUtil.consumirFlashError(request));
+    }
+
+    private void cargarDashboard(HttpServletRequest request) {
+        int totalClientes = dashboardDAO.contarClientes();
+        int totalPolarizado = dashboardDAO.contarPedidosPolarizado();
+        int totalLogotipo = dashboardDAO.contarPedidosLogotipo();
+        int totalInstalacion = dashboardDAO.contarPedidosInstalacion();
+        int totalGeneral = totalPolarizado + totalLogotipo + totalInstalacion;
+        List<ResumenPedidoReciente> pedidosRecientes = dashboardDAO.listarUltimosPedidos(8);
+
+        request.setAttribute("totalClientes", totalClientes);
+        request.setAttribute("totalPolarizado", totalPolarizado);
+        request.setAttribute("totalLogotipo", totalLogotipo);
+        request.setAttribute("totalInstalacion", totalInstalacion);
+        request.setAttribute("totalGeneral", totalGeneral);
+        request.setAttribute("pedidosRecientes", pedidosRecientes);
+        request.setAttribute("flashSuccess", SessionUtil.consumirFlashSuccess(request));
+        request.setAttribute("flashWarning", SessionUtil.consumirFlashWarning(request));
+        request.setAttribute("flashError", SessionUtil.consumirFlashError(request));
+    }
+
+    private String normalizarFiltroServicio(String valor) {
+        if (valor == null || valor.isBlank()) {
+            return "todos";
+        }
+        return switch (valor) {
+            case "todos", "polarizado", "logotipo", "instalacion" -> valor;
+            default -> "todos";
+        };
+    }
+
+    private boolean mostrarPolarizado(String filtroServicio) {
+        return "todos".equals(filtroServicio) || "polarizado".equals(filtroServicio);
+    }
+
+    private boolean mostrarLogotipo(String filtroServicio) {
+        return "todos".equals(filtroServicio) || "logotipo".equals(filtroServicio);
+    }
+
+    private boolean mostrarInstalacion(String filtroServicio) {
+        return "todos".equals(filtroServicio) || "instalacion".equals(filtroServicio);
     }
 }

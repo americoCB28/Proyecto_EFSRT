@@ -77,4 +77,30 @@ public class ClienteDAO {
             System.out.println("Error al eliminar cliente: " + e.getMessage());
         }
     }
+
+    public List<Cliente> listarClientesPorNombre(String filtroNombre) {
+        if (filtroNombre == null || filtroNombre.isBlank()) {
+            return listarClientes();
+        }
+
+        List<Cliente> clientes = new ArrayList<>();
+        String sql = "SELECT * FROM clientes WHERE nombre LIKE ? ORDER BY idCliente DESC";
+        try (
+                Connection conn = ConexionDB.getConexion();
+                PreparedStatement ps = conn.prepareStatement(sql)
+        ) {
+            ps.setString(1, "%" + filtroNombre.trim() + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Cliente cliente = new Cliente();
+                    cliente.setIdCliente(rs.getInt("idCliente"));
+                    cliente.setNombre(rs.getString("nombre"));
+                    clientes.add(cliente);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al listar clientes filtrados: " + e.getMessage());
+        }
+        return clientes;
+    }
 }

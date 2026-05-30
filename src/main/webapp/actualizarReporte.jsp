@@ -26,6 +26,7 @@
             <span class="brand-subtitle">Gestiona la informacion y vuelve automaticamente al panel principal</span>
         </div>
         <div class="topbar-actions">
+            <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
             <a href="servicio?tipo=reportes" class="app-button app-button-info">Volver a Reportes</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
         </div>
