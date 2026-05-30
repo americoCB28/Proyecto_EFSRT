@@ -24,7 +24,7 @@ public class AuthController extends HttpServlet {
 
         if ("/logout".equals(servletPath)) {
             SessionUtil.cerrarSesion(request);
-            SessionUtil.guardarFlashSuccess(request, "Sesión cerrada correctamente.");
+            SessionUtil.guardarFlashSuccess(request, "Sesion cerrada correctamente.");
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
@@ -52,7 +52,8 @@ public class AuthController extends HttpServlet {
         String password = request.getParameter("password");
 
         if (username == null || username.isBlank() || password == null || password.isBlank()) {
-            request.setAttribute("error", "Usuario y contraseña son obligatorios.");
+            request.setAttribute("error", "Usuario y contrasena son obligatorios.");
+            request.setAttribute("username", username == null ? "" : username);
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }

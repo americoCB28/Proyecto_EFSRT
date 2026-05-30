@@ -1,10 +1,13 @@
 package util;
 
+import dao.UsuarioDAO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import model.Usuario;
 
 public final class SessionUtil {
+
+    private static final UsuarioDAO USUARIO_DAO = new UsuarioDAO();
 
     public static final String AUTH_USER = "authUser";
     public static final String PENDING_REDIRECT = "pendingRedirect";
@@ -42,7 +45,21 @@ public final class SessionUtil {
 
     public static boolean esAdministrador(HttpServletRequest request) {
         Usuario usuario = obtenerUsuario(request);
-        return usuario != null && "ADMIN".equalsIgnoreCase(usuario.getRol()) && usuario.isActivo();
+        if (usuario == null) {
+            return false;
+        }
+
+        Usuario usuarioActualizado = USUARIO_DAO.buscarUsuarioActivoPorId(usuario.getIdUsuario());
+        if (usuarioActualizado == null || !"ADMIN".equalsIgnoreCase(usuarioActualizado.getRol())) {
+            cerrarSesion(request);
+            return false;
+        }
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.setAttribute(AUTH_USER, usuarioActualizado);
+        }
+        return true;
     }
 
     public static void guardarRedireccionPendiente(HttpServletRequest request, String redirect) {

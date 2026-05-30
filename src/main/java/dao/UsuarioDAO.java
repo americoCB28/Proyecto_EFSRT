@@ -102,6 +102,24 @@ public class UsuarioDAO {
         return null;
     }
 
+    public Usuario buscarUsuarioActivoPorId(int idUsuario) {
+        String sql = "SELECT idUsuario, username, passwordHash, rol, activo FROM usuarios WHERE idUsuario = ? AND activo = 1";
+        try (
+                Connection conn = ConexionDB.getConexion();
+                PreparedStatement ps = conn.prepareStatement(sql)
+        ) {
+            ps.setInt(1, idUsuario);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapearUsuario(rs);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al buscar usuario activo por id: " + e.getMessage());
+        }
+        return null;
+    }
+
     public boolean actualizarEstadoUsuario(int idUsuario, boolean activo) {
         String sql = "UPDATE usuarios SET activo = ? WHERE idUsuario = ?";
         try (

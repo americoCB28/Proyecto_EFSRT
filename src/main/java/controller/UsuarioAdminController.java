@@ -95,6 +95,11 @@ public class UsuarioAdminController extends HttpServlet {
         }
 
         int idUsuario = Integer.parseInt(idUsuarioParam);
+        if (!"1".equals(nuevoEstadoParam) && !"0".equals(nuevoEstadoParam)) {
+            SessionUtil.guardarFlashWarning(request, "El estado solicitado no es valido.");
+            response.sendRedirect(request.getContextPath() + "/usuarios");
+            return;
+        }
         boolean activar = "1".equals(nuevoEstadoParam);
         Usuario usuarioObjetivo = usuarioDAO.buscarUsuarioPorId(idUsuario);
 

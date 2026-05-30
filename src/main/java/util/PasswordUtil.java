@@ -29,17 +29,20 @@ public final class PasswordUtil {
             return false;
         }
 
-        String[] parts = storedHash.split(":");
-        if (parts.length != 3) {
+        try {
+            String[] parts = storedHash.split(":");
+            if (parts.length != 3) {
+                return false;
+            }
+
+            int iterations = Integer.parseInt(parts[0]);
+            byte[] salt = Base64.getDecoder().decode(parts[1]);
+            byte[] expectedHash = Base64.getDecoder().decode(parts[2]);
+            byte[] actualHash = pbkdf2(plainPassword.toCharArray(), salt, iterations, expectedHash.length * 8);
+            return slowEquals(expectedHash, actualHash);
+        } catch (RuntimeException e) {
             return false;
         }
-
-        int iterations = Integer.parseInt(parts[0]);
-        byte[] salt = Base64.getDecoder().decode(parts[1]);
-        byte[] expectedHash = Base64.getDecoder().decode(parts[2]);
-        byte[] actualHash = pbkdf2(plainPassword.toCharArray(), salt, iterations, expectedHash.length * 8);
-
-        return slowEquals(expectedHash, actualHash);
     }
 
     private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int keyLength) {
@@ -48,7 +51,7 @@ public final class PasswordUtil {
             SecretKeyFactory factory = SecretKeyFactory.getInstance(ALGORITHM);
             return factory.generateSecret(spec).getEncoded();
         } catch (GeneralSecurityException e) {
-            throw new IllegalStateException("No se pudo generar/verificar el hash de contraseña", e);
+            throw new IllegalStateException("No se pudo generar o verificar el hash de contrasena", e);
         }
     }
 

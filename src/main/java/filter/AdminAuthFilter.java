@@ -11,7 +11,15 @@ import util.SessionUtil;
 import java.io.IOException;
 import java.util.Set;
 
-@WebFilter(urlPatterns = {"/servicio", "/usuarios", "/reportes.jsp", "/actualizarReporte.jsp"})
+@WebFilter(urlPatterns = {
+        "/servicio",
+        "/usuarios",
+        "/dashboard.jsp",
+        "/reportes.jsp",
+        "/actualizarReporte.jsp",
+        "/historialCliente.jsp",
+        "/usuarios.jsp"
+})
 public class AdminAuthFilter implements Filter {
 
     private static final Set<String> TIPOS_PROTEGIDOS = Set.of(
@@ -44,17 +52,18 @@ public class AdminAuthFilter implements Filter {
         }
 
         SessionUtil.guardarRedireccionPendiente(httpRequest, construirDestinoProtegido(httpRequest));
-        SessionUtil.guardarFlashError(httpRequest, "Debes iniciar sesión para acceder a la zona administrativa.");
+        SessionUtil.guardarFlashError(httpRequest, "Debes iniciar sesion para acceder a la zona administrativa.");
         httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
     }
 
     private boolean requiereAutenticacion(HttpServletRequest request) {
         String servletPath = request.getServletPath();
-        if ("/reportes.jsp".equals(servletPath) || "/actualizarReporte.jsp".equals(servletPath)) {
-            return true;
-        }
-
-        if ("/usuarios".equals(servletPath)) {
+        if ("/dashboard.jsp".equals(servletPath)
+                || "/reportes.jsp".equals(servletPath)
+                || "/actualizarReporte.jsp".equals(servletPath)
+                || "/historialCliente.jsp".equals(servletPath)
+                || "/usuarios.jsp".equals(servletPath)
+                || "/usuarios".equals(servletPath)) {
             return true;
         }
 
@@ -68,6 +77,9 @@ public class AdminAuthFilter implements Filter {
 
     private String construirDestinoProtegido(HttpServletRequest request) {
         if ("POST".equalsIgnoreCase(request.getMethod())) {
+            if ("/usuarios".equals(request.getServletPath())) {
+                return request.getContextPath() + "/usuarios";
+            }
             return request.getContextPath() + "/servicio?tipo=reportes";
         }
 
