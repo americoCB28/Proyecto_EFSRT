@@ -17,6 +17,7 @@ public class AdminAuthFilter implements Filter {
     private static final Set<String> TIPOS_PROTEGIDOS = Set.of(
             "dashboard",
             "reportes",
+            "exportarCsv",
             "actualizarReporte",
             "actualizarCliente",
             "actualizarPolarizado",

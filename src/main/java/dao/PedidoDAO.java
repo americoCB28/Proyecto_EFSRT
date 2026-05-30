@@ -64,18 +64,24 @@ public class PedidoDAO {
     }
 
     public List<Pedido> listarPedidosPolarizadoPorCliente(String filtroCliente) {
+        return listarPedidosPolarizadoFiltrados(filtroCliente, null);
+    }
+
+    public List<Pedido> listarPedidosPolarizadoFiltrados(String filtroCliente, String filtroEstado) {
         List<Pedido> pedidos = new ArrayList<>();
-        String sql = "SELECT p.idPedido, p.material, p.luzVisible, p.estado, p.fechaPedido, c.nombre " +
-                "FROM pedidos p JOIN clientes c ON p.idCliente = c.idCliente" +
-                (tieneFiltro(filtroCliente) ? " WHERE c.nombre LIKE ?" : "") +
-                " ORDER BY p.fechaPedido DESC";
+        StringBuilder sql = new StringBuilder(
+                "SELECT p.idPedido, p.material, p.luzVisible, p.estado, p.fechaPedido, c.nombre " +
+                        "FROM pedidos p JOIN clientes c ON p.idCliente = c.idCliente"
+        );
+        List<String> parametros = new ArrayList<>();
+        agregarCondicion(sql, parametros, "c.nombre LIKE ?", tieneFiltro(filtroCliente), "%" + filtroCliente + "%");
+        agregarCondicion(sql, parametros, "p.estado = ?", tieneFiltro(filtroEstado), filtroEstado);
+        sql.append(" ORDER BY p.fechaPedido DESC");
         try (
                 Connection conn = ConexionDB.getConexion();
-                PreparedStatement ps = conn.prepareStatement(sql)
+                PreparedStatement ps = conn.prepareStatement(sql.toString())
         ) {
-            if (tieneFiltro(filtroCliente)) {
-                ps.setString(1, "%" + filtroCliente.trim() + "%");
-            }
+            asignarParametros(ps, parametros);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Pedido pedido = new Pedido();
@@ -99,18 +105,24 @@ public class PedidoDAO {
     }
 
     public List<PedidoLogotipo> listarPedidosLogotipoPorCliente(String filtroCliente) {
+        return listarPedidosLogotipoFiltrados(filtroCliente, null);
+    }
+
+    public List<PedidoLogotipo> listarPedidosLogotipoFiltrados(String filtroCliente, String filtroEstado) {
         List<PedidoLogotipo> pedidos = new ArrayList<>();
-        String sql = "SELECT pl.idPedidoLogotipo, pl.servicioSeleccionado, pl.estado, pl.fechaPedido, c.nombre " +
-                "FROM pedidosLogotipo pl JOIN clientes c ON pl.idCliente = c.idCliente" +
-                (tieneFiltro(filtroCliente) ? " WHERE c.nombre LIKE ?" : "") +
-                " ORDER BY pl.fechaPedido DESC";
+        StringBuilder sql = new StringBuilder(
+                "SELECT pl.idPedidoLogotipo, pl.servicioSeleccionado, pl.estado, pl.fechaPedido, c.nombre " +
+                        "FROM pedidosLogotipo pl JOIN clientes c ON pl.idCliente = c.idCliente"
+        );
+        List<String> parametros = new ArrayList<>();
+        agregarCondicion(sql, parametros, "c.nombre LIKE ?", tieneFiltro(filtroCliente), "%" + filtroCliente + "%");
+        agregarCondicion(sql, parametros, "pl.estado = ?", tieneFiltro(filtroEstado), filtroEstado);
+        sql.append(" ORDER BY pl.fechaPedido DESC");
         try (
                 Connection conn = ConexionDB.getConexion();
-                PreparedStatement ps = conn.prepareStatement(sql)
+                PreparedStatement ps = conn.prepareStatement(sql.toString())
         ) {
-            if (tieneFiltro(filtroCliente)) {
-                ps.setString(1, "%" + filtroCliente.trim() + "%");
-            }
+            asignarParametros(ps, parametros);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     PedidoLogotipo pedido = new PedidoLogotipo();
@@ -133,18 +145,24 @@ public class PedidoDAO {
     }
 
     public List<PedidoInstalacion> listarPedidosInstalacionPorCliente(String filtroCliente) {
+        return listarPedidosInstalacionFiltrados(filtroCliente, null);
+    }
+
+    public List<PedidoInstalacion> listarPedidosInstalacionFiltrados(String filtroCliente, String filtroEstado) {
         List<PedidoInstalacion> pedidos = new ArrayList<>();
-        String sql = "SELECT pi.idPedidoInstalacion, pi.servicioSeleccionado, pi.estado, pi.fechaPedido, c.nombre " +
-                "FROM pedidosInstalaciones pi JOIN clientes c ON pi.idCliente = c.idCliente" +
-                (tieneFiltro(filtroCliente) ? " WHERE c.nombre LIKE ?" : "") +
-                " ORDER BY pi.fechaPedido DESC";
+        StringBuilder sql = new StringBuilder(
+                "SELECT pi.idPedidoInstalacion, pi.servicioSeleccionado, pi.estado, pi.fechaPedido, c.nombre " +
+                        "FROM pedidosInstalaciones pi JOIN clientes c ON pi.idCliente = c.idCliente"
+        );
+        List<String> parametros = new ArrayList<>();
+        agregarCondicion(sql, parametros, "c.nombre LIKE ?", tieneFiltro(filtroCliente), "%" + filtroCliente + "%");
+        agregarCondicion(sql, parametros, "pi.estado = ?", tieneFiltro(filtroEstado), filtroEstado);
+        sql.append(" ORDER BY pi.fechaPedido DESC");
         try (
                 Connection conn = ConexionDB.getConexion();
-                PreparedStatement ps = conn.prepareStatement(sql)
+                PreparedStatement ps = conn.prepareStatement(sql.toString())
         ) {
-            if (tieneFiltro(filtroCliente)) {
-                ps.setString(1, "%" + filtroCliente.trim() + "%");
-            }
+            asignarParametros(ps, parametros);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     PedidoInstalacion pedido = new PedidoInstalacion();
@@ -210,5 +228,21 @@ public class PedidoDAO {
 
     private boolean tieneFiltro(String filtroCliente) {
         return filtroCliente != null && !filtroCliente.isBlank();
+    }
+
+    private void agregarCondicion(StringBuilder sql, List<String> parametros, String condicion,
+                                  boolean incluir, String valor) {
+        if (!incluir) {
+            return;
+        }
+        sql.append(parametros.isEmpty() ? " WHERE " : " AND ");
+        sql.append(condicion);
+        parametros.add(valor);
+    }
+
+    private void asignarParametros(PreparedStatement ps, List<String> parametros) throws Exception {
+        for (int i = 0; i < parametros.size(); i++) {
+            ps.setString(i + 1, parametros.get(i));
+        }
     }
 }

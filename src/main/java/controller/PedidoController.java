@@ -17,6 +17,7 @@ import util.InputValidator;
 import util.SessionUtil;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
@@ -63,6 +64,11 @@ public class PedidoController extends HttpServlet {
         if ("dashboard".equals(tipo)) {
             cargarDashboard(request);
             request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+            return;
+        }
+
+        if ("exportarCsv".equals(tipo)) {
+            exportarCsv(request, response);
             return;
         }
 
@@ -297,18 +303,20 @@ public class PedidoController extends HttpServlet {
     private void cargarDatosReporte(HttpServletRequest request) {
         String filtroCliente = InputValidator.normalizarNombre(request.getParameter("cliente"));
         String filtroServicio = normalizarFiltroServicio(request.getParameter("servicioFiltro"));
+        String filtroEstado = InputValidator.normalizarEstadoFiltro(request.getParameter("estadoFiltro"));
 
         request.setAttribute("clienteFiltro", filtroCliente == null ? "" : filtroCliente);
         request.setAttribute("servicioFiltro", filtroServicio);
+        request.setAttribute("estadoFiltro", filtroEstado);
         request.setAttribute("clientes", clienteDAO.listarClientesPorNombre(filtroCliente));
         request.setAttribute("pedidos", mostrarPolarizado(filtroServicio)
-                ? pedidoDAO.listarPedidosPolarizadoPorCliente(filtroCliente)
+                ? pedidoDAO.listarPedidosPolarizadoFiltrados(filtroCliente, filtroEstadoParaConsulta(filtroEstado))
                 : Collections.emptyList());
         request.setAttribute("pedidosLogotipo", mostrarLogotipo(filtroServicio)
-                ? pedidoDAO.listarPedidosLogotipoPorCliente(filtroCliente)
+                ? pedidoDAO.listarPedidosLogotipoFiltrados(filtroCliente, filtroEstadoParaConsulta(filtroEstado))
                 : Collections.emptyList());
         request.setAttribute("pedidosInstalacion", mostrarInstalacion(filtroServicio)
-                ? pedidoDAO.listarPedidosInstalacionPorCliente(filtroCliente)
+                ? pedidoDAO.listarPedidosInstalacionFiltrados(filtroCliente, filtroEstadoParaConsulta(filtroEstado))
                 : Collections.emptyList());
         request.setAttribute("flashSuccess", SessionUtil.consumirFlashSuccess(request));
         request.setAttribute("flashWarning", SessionUtil.consumirFlashWarning(request));
@@ -354,5 +362,83 @@ public class PedidoController extends HttpServlet {
 
     private boolean mostrarInstalacion(String filtroServicio) {
         return "todos".equals(filtroServicio) || "instalacion".equals(filtroServicio);
+    }
+
+    private String filtroEstadoParaConsulta(String filtroEstado) {
+        return "todos".equals(filtroEstado) ? null : filtroEstado;
+    }
+
+    private void exportarCsv(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String filtroCliente = InputValidator.normalizarNombre(request.getParameter("cliente"));
+        String filtroServicio = normalizarFiltroServicio(request.getParameter("servicioFiltro"));
+        String filtroEstado = InputValidator.normalizarEstadoFiltro(request.getParameter("estadoFiltro"));
+        String estadoConsulta = filtroEstadoParaConsulta(filtroEstado);
+
+        try {
+            StringBuilder csv = new StringBuilder();
+            csv.append('\uFEFF');
+            csv.append("cliente,servicio,fecha,estado,detalle_1,detalle_2\n");
+
+            if (mostrarPolarizado(filtroServicio)) {
+                for (Pedido pedido : pedidoDAO.listarPedidosPolarizadoFiltrados(filtroCliente, estadoConsulta)) {
+                    agregarFilaCsv(csv,
+                            pedido.getNombreCliente(),
+                            "Polarizado",
+                            pedido.getFechaPedido(),
+                            pedido.getEstado(),
+                            pedido.getMaterial(),
+                            pedido.getLuzVisible());
+                }
+            }
+
+            if (mostrarLogotipo(filtroServicio)) {
+                for (PedidoLogotipo pedido : pedidoDAO.listarPedidosLogotipoFiltrados(filtroCliente, estadoConsulta)) {
+                    agregarFilaCsv(csv,
+                            pedido.getNombreCliente(),
+                            "Logotipo",
+                            pedido.getFechaPedido(),
+                            pedido.getEstado(),
+                            pedido.getServicioSeleccionado(),
+                            "");
+                }
+            }
+
+            if (mostrarInstalacion(filtroServicio)) {
+                for (PedidoInstalacion pedido : pedidoDAO.listarPedidosInstalacionFiltrados(filtroCliente, estadoConsulta)) {
+                    agregarFilaCsv(csv,
+                            pedido.getNombreCliente(),
+                            "Instalacion",
+                            pedido.getFechaPedido(),
+                            pedido.getEstado(),
+                            pedido.getServicioSeleccionado(),
+                            "");
+                }
+            }
+
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+            response.setContentType("text/csv; charset=UTF-8");
+            response.setHeader("Content-Disposition", "attachment; filename=\"reporte_pedidos.csv\"");
+            response.getWriter().write(csv.toString());
+        } catch (Exception e) {
+            SessionUtil.guardarFlashError(request, "No se pudo generar el archivo CSV. Intenta nuevamente.");
+            response.sendRedirect("servicio?tipo=reportes");
+        }
+    }
+
+    private void agregarFilaCsv(StringBuilder csv, String cliente, String servicio, String fecha,
+                                String estado, String detalle1, String detalle2) {
+        csv.append(escaparCsv(cliente)).append(',')
+                .append(escaparCsv(servicio)).append(',')
+                .append(escaparCsv(fecha)).append(',')
+                .append(escaparCsv(estado)).append(',')
+                .append(escaparCsv(detalle1)).append(',')
+                .append(escaparCsv(detalle2)).append('\n');
+    }
+
+    private String escaparCsv(String valor) {
+        if (valor == null) {
+            return "\"\"";
+        }
+        return "\"" + valor.replace("\"", "\"\"") + "\"";
     }
 }

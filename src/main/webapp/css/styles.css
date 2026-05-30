@@ -447,7 +447,7 @@ body.app-body {
 
 .filter-grid {
   display: grid;
-  grid-template-columns: minmax(220px, 2fr) minmax(180px, 1fr) auto;
+  grid-template-columns: minmax(220px, 2fr) minmax(180px, 1fr) minmax(180px, 1fr) auto;
   gap: 14px;
   align-items: end;
 }
@@ -457,6 +457,12 @@ body.app-body {
   gap: 10px;
   flex-wrap: wrap;
   justify-content: flex-start;
+}
+
+.export-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .status-pill {

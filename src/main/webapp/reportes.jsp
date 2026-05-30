@@ -18,6 +18,7 @@
     String flashError = (String) request.getAttribute("flashError");
     String clienteFiltro = (String) request.getAttribute("clienteFiltro");
     String servicioFiltro = (String) request.getAttribute("servicioFiltro");
+    String estadoFiltro = (String) request.getAttribute("estadoFiltro");
     List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
     List<Pedido> pedidos = (List<Pedido>) request.getAttribute("pedidos");
     List<PedidoLogotipo> pedidosLogotipo = (List<PedidoLogotipo>) request.getAttribute("pedidosLogotipo");
@@ -66,10 +67,27 @@
                     <option value="instalacion" <%= "instalacion".equals(servicioFiltro) ? "selected" : "" %>>Instalacion</option>
                 </select>
             </div>
+            <div>
+                <label class="form-label" for="estadoFiltro">Estado</label>
+                <select id="estadoFiltro" name="estadoFiltro" class="form-select app-field">
+                    <option value="todos" <%= "todos".equals(estadoFiltro) ? "selected" : "" %>>Todos</option>
+                    <option value="pendiente" <%= "pendiente".equals(estadoFiltro) ? "selected" : "" %>>Pendiente</option>
+                    <option value="en_proceso" <%= "en_proceso".equals(estadoFiltro) ? "selected" : "" %>>En proceso</option>
+                    <option value="terminado" <%= "terminado".equals(estadoFiltro) ? "selected" : "" %>>Terminado</option>
+                    <option value="cancelado" <%= "cancelado".equals(estadoFiltro) ? "selected" : "" %>>Cancelado</option>
+                </select>
+            </div>
             <div class="filter-actions">
                 <button type="submit" class="app-button app-button-primary">Aplicar filtros</button>
                 <a href="servicio?tipo=reportes" class="app-button app-button-secondary">Limpiar</a>
             </div>
+        </form>
+        <form action="servicio" method="get" class="export-actions">
+            <input type="hidden" name="tipo" value="exportarCsv">
+            <input type="hidden" name="cliente" value="<%= clienteFiltro == null ? "" : clienteFiltro %>">
+            <input type="hidden" name="servicioFiltro" value="<%= servicioFiltro == null ? "todos" : servicioFiltro %>">
+            <input type="hidden" name="estadoFiltro" value="<%= estadoFiltro == null ? "todos" : estadoFiltro %>">
+            <button type="submit" class="app-button app-button-info">Exportar CSV</button>
         </form>
     </section>
 

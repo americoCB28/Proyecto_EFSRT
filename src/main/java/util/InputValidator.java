@@ -60,6 +60,13 @@ public final class InputValidator {
         return ESTADOS_VALIDOS.contains(estado);
     }
 
+    public static String normalizarEstadoFiltro(String estado) {
+        if (estado == null || estado.isBlank()) {
+            return "todos";
+        }
+        return ESTADOS_VALIDOS.contains(estado) ? estado : "todos";
+    }
+
     public static boolean esIdPositivo(String valor) {
         try {
             return Integer.parseInt(valor) > 0;
