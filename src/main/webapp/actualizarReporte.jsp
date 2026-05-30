@@ -9,134 +9,156 @@
 <head>
     <title>Actualizar Reportes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
-<body style="background-color: #111111;">
+<body class="app-body">
+<%
+    List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+    List<Pedido> pedidos = (List<Pedido>) request.getAttribute("pedidos");
+    List<PedidoLogotipo> pedidosLogotipo = (List<PedidoLogotipo>) request.getAttribute("pedidosLogotipo");
+    List<PedidoInstalacion> pedidosInstalacion = (List<PedidoInstalacion>) request.getAttribute("pedidosInstalacion");
+%>
 
-<nav class="navbar navbar-dark border-bottom border-secondary" style="background-color: #1a1a1a;">
-    <div class="container">
-        <span class="navbar-brand fw-bold fs-4 text-white">Actualizar Reportes</span>
-        <div class="d-flex gap-2">
-            <a href="servicio?tipo=reportes" class="btn btn-outline-light btn-sm">Volver a Reportes</a>
-            <a href="logout" class="btn btn-outline-warning btn-sm">Cerrar sesion</a>
+<nav class="app-topbar">
+    <div class="app-topbar-inner">
+        <div class="brand-stack">
+            <span class="brand-title">Actualizar Reportes</span>
+            <span class="brand-subtitle">Gestiona la informacion y vuelve automaticamente al panel principal</span>
+        </div>
+        <div class="topbar-actions">
+            <a href="servicio?tipo=reportes" class="app-button app-button-info">Volver a Reportes</a>
+            <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
         </div>
     </div>
 </nav>
 
-<div class="container py-5">
-    <div class="alert alert-info border-0 shadow-sm" role="alert">
-        Estas en modo de actualizacion. Guarda tus cambios y regresaras al panel de reportes con un mensaje de confirmacion.
-    </div>
+<main class="app-shell page-section">
+    <section class="section-hero">
+        <span class="eyebrow">Modo edicion</span>
+        <h1 class="form-title mt-3">Actualizacion controlada</h1>
+        <p class="form-subtitle">Guarda un cambio por fila y el flujo te devolvera al panel de reportes con un mensaje visible.</p>
+    </section>
 
-    <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
-        <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
-            Clientes Registrados
+    <section class="table-card">
+        <div class="table-title">
+            <h3>Clientes</h3>
         </div>
-        <div class="card-body p-0">
-            <table class="table table-dark table-striped table-hover mb-0">
+        <div class="table-responsive-shell">
+            <table class="admin-table">
                 <thead>
-                <tr><th class="text-secondary">ID</th><th class="text-secondary">Nombre</th><th class="text-secondary">Guardar</th><th class="text-secondary">Eliminar</th></tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
                 </thead>
                 <tbody>
-                <%
-                    List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
-                    if (clientes != null) {
-                        for (Cliente c : clientes) {
-                %>
+                <% if (clientes != null) {
+                    for (Cliente c : clientes) { %>
                 <tr>
-                    <form action="servicio" method="post">
-                        <input type="hidden" name="tipo" value="actualizarCliente">
-                        <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
-                        <td class="text-white-50"><%= c.getIdCliente() %></td>
-                        <td><input type="text" name="nombre" value="<%= c.getNombre() %>" class="form-control form-control-sm bg-dark text-white border-secondary"></td>
-                        <td><button type="submit" class="btn btn-sm btn-outline-light">Guardar</button></td>
-                    </form>
-                    <form action="servicio" method="post" onsubmit="return confirm('Seguro que deseas eliminar este cliente y todos sus pedidos?')">
-                        <input type="hidden" name="tipo" value="eliminarCliente">
-                        <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
-                        <td><button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button></td>
-                    </form>
+                    <td><%= c.getIdCliente() %></td>
+                    <td>
+                        <form action="servicio" method="post">
+                            <input type="hidden" name="tipo" value="actualizarCliente">
+                            <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
+                            <input type="text" name="nombre" value="<%= c.getNombre() %>" class="form-control app-field">
+                    </td>
+                    <td>
+                            <div class="stacked-forms">
+                                <button type="submit" class="app-button app-button-secondary">Guardar</button>
+                        </form>
+                        <form action="servicio" method="post" onsubmit="return confirm('Seguro que deseas eliminar este cliente y todos sus pedidos?')">
+                            <input type="hidden" name="tipo" value="eliminarCliente">
+                            <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
+                            <button type="submit" class="app-button app-button-danger-outline">Eliminar</button>
+                        </form>
+                            </div>
+                    </td>
                 </tr>
-                <%
-                        }
-                    }
-                %>
+                <% }
+                } %>
                 </tbody>
             </table>
         </div>
-    </div>
+    </section>
 
-    <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
-        <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
-            Pedidos - Polarizados
+    <section class="table-card">
+        <div class="table-title">
+            <h3>Pedidos de polarizado</h3>
         </div>
-        <div class="card-body p-0">
-            <table class="table table-dark table-striped table-hover mb-0">
+        <div class="table-responsive-shell">
+            <table class="admin-table">
                 <thead>
-                <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Material</th><th class="text-secondary">Luz Visible</th><th class="text-secondary">Fecha</th><th class="text-secondary">Accion</th></tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Material</th>
+                    <th>Luz Visible</th>
+                    <th>Fecha</th>
+                    <th>Accion</th>
+                </tr>
                 </thead>
                 <tbody>
-                <%
-                    List<Pedido> pedidos = (List<Pedido>) request.getAttribute("pedidos");
-                    if (pedidos != null) {
-                        for (Pedido p : pedidos) {
-                %>
+                <% if (pedidos != null) {
+                    for (Pedido p : pedidos) { %>
                 <tr>
                     <form action="servicio" method="post">
                         <input type="hidden" name="tipo" value="actualizarPolarizado">
                         <input type="hidden" name="idPedido" value="<%= p.getIdPedido() %>">
-                        <td class="text-white-50"><%= p.getIdPedido() %></td>
-                        <td class="text-white"><%= p.getNombreCliente() %></td>
+                        <td><%= p.getIdPedido() %></td>
+                        <td><%= p.getNombreCliente() %></td>
                         <td>
-                            <select name="material" class="form-select form-select-sm bg-dark text-white border-secondary">
+                            <select name="material" class="form-select app-field">
                                 <option value="nanoCarbono" <%= "nanoCarbono".equals(p.getMaterial()) ? "selected" : "" %>>nanoCarbono</option>
                                 <option value="nanoCeramico" <%= "nanoCeramico".equals(p.getMaterial()) ? "selected" : "" %>>nanoCeramico</option>
                                 <option value="Crystalline" <%= "Crystalline".equals(p.getMaterial()) ? "selected" : "" %>>Crystalline</option>
                             </select>
                         </td>
                         <td>
-                            <select name="luzVisible" class="form-select form-select-sm bg-dark text-white border-secondary">
+                            <select name="luzVisible" class="form-select app-field">
                                 <option value="5%" <%= "5%".equals(p.getLuzVisible()) ? "selected" : "" %>>5%</option>
                                 <option value="20%" <%= "20%".equals(p.getLuzVisible()) ? "selected" : "" %>>20%</option>
                                 <option value="35%" <%= "35%".equals(p.getLuzVisible()) ? "selected" : "" %>>35%</option>
                                 <option value="50%" <%= "50%".equals(p.getLuzVisible()) ? "selected" : "" %>>50%</option>
                             </select>
                         </td>
-                        <td class="text-white-50"><%= p.getFechaPedido() %></td>
-                        <td><button type="submit" class="btn btn-sm btn-outline-light">Guardar</button></td>
+                        <td><%= p.getFechaPedido() %></td>
+                        <td><button type="submit" class="app-button app-button-secondary">Guardar</button></td>
                     </form>
                 </tr>
-                <%
-                        }
-                    }
-                %>
+                <% }
+                } %>
                 </tbody>
             </table>
         </div>
-    </div>
+    </section>
 
-    <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
-        <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
-            Pedidos - Logotipos
+    <section class="table-card">
+        <div class="table-title">
+            <h3>Pedidos de logotipos</h3>
         </div>
-        <div class="card-body p-0">
-            <table class="table table-dark table-striped table-hover mb-0">
+        <div class="table-responsive-shell">
+            <table class="admin-table">
                 <thead>
-                <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Servicio</th><th class="text-secondary">Fecha</th><th class="text-secondary">Accion</th></tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Servicio</th>
+                    <th>Fecha</th>
+                    <th>Accion</th>
+                </tr>
                 </thead>
                 <tbody>
-                <%
-                    List<PedidoLogotipo> pedidosLogotipo = (List<PedidoLogotipo>) request.getAttribute("pedidosLogotipo");
-                    if (pedidosLogotipo != null) {
-                        for (PedidoLogotipo pl : pedidosLogotipo) {
-                %>
+                <% if (pedidosLogotipo != null) {
+                    for (PedidoLogotipo pl : pedidosLogotipo) { %>
                 <tr>
                     <form action="servicio" method="post">
                         <input type="hidden" name="tipo" value="actualizarLogotipo">
                         <input type="hidden" name="idPedidoLogotipo" value="<%= pl.getIdPedidoLogotipo() %>">
-                        <td class="text-white-50"><%= pl.getIdPedidoLogotipo() %></td>
-                        <td class="text-white"><%= pl.getNombreCliente() %></td>
+                        <td><%= pl.getIdPedidoLogotipo() %></td>
+                        <td><%= pl.getNombreCliente() %></td>
                         <td>
-                            <select name="servicioSeleccionado" class="form-select form-select-sm bg-dark text-white border-secondary">
+                            <select name="servicioSeleccionado" class="form-select app-field">
                                 <option value="Placa Provisional" <%= "Placa Provisional".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Placa Provisional</option>
                                 <option value="Tapasol" <%= "Tapasol".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Tapasol</option>
                                 <option value="Forrado de faros" <%= "Forrado de faros".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Forrado de faros</option>
@@ -145,42 +167,43 @@
                                 <option value="Manijas" <%= "Manijas".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Manijas</option>
                             </select>
                         </td>
-                        <td class="text-white-50"><%= pl.getFechaPedido() %></td>
-                        <td><button type="submit" class="btn btn-sm btn-outline-light">Guardar</button></td>
+                        <td><%= pl.getFechaPedido() %></td>
+                        <td><button type="submit" class="app-button app-button-secondary">Guardar</button></td>
                     </form>
                 </tr>
-                <%
-                        }
-                    }
-                %>
+                <% }
+                } %>
                 </tbody>
             </table>
         </div>
-    </div>
+    </section>
 
-    <div class="card border border-secondary shadow mb-5" style="background-color: #1a1a1a;">
-        <div class="card-header fw-bold text-white border-bottom border-secondary" style="background-color: #2a2a2a;">
-            Pedidos - Instalaciones
+    <section class="table-card">
+        <div class="table-title">
+            <h3>Pedidos de instalaciones</h3>
         </div>
-        <div class="card-body p-0">
-            <table class="table table-dark table-striped table-hover mb-0">
+        <div class="table-responsive-shell">
+            <table class="admin-table">
                 <thead>
-                <tr><th class="text-secondary">ID</th><th class="text-secondary">Cliente</th><th class="text-secondary">Servicio</th><th class="text-secondary">Fecha</th><th class="text-secondary">Accion</th></tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Servicio</th>
+                    <th>Fecha</th>
+                    <th>Accion</th>
+                </tr>
                 </thead>
                 <tbody>
-                <%
-                    List<PedidoInstalacion> pedidosInstalacion = (List<PedidoInstalacion>) request.getAttribute("pedidosInstalacion");
-                    if (pedidosInstalacion != null) {
-                        for (PedidoInstalacion pi : pedidosInstalacion) {
-                %>
+                <% if (pedidosInstalacion != null) {
+                    for (PedidoInstalacion pi : pedidosInstalacion) { %>
                 <tr>
                     <form action="servicio" method="post">
                         <input type="hidden" name="tipo" value="actualizarInstalacion">
                         <input type="hidden" name="idPedidoInstalacion" value="<%= pi.getIdPedidoInstalacion() %>">
-                        <td class="text-white-50"><%= pi.getIdPedidoInstalacion() %></td>
-                        <td class="text-white"><%= pi.getNombreCliente() %></td>
+                        <td><%= pi.getIdPedidoInstalacion() %></td>
+                        <td><%= pi.getNombreCliente() %></td>
                         <td>
-                            <select name="servicioSeleccionado" class="form-select form-select-sm bg-dark text-white border-secondary">
+                            <select name="servicioSeleccionado" class="form-select app-field">
                                 <option value="Tapizado de Techo" <%= "Tapizado de Techo".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Tapizado de Techo</option>
                                 <option value="Tapizado de Piso" <%= "Tapizado de Piso".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Tapizado de Piso</option>
                                 <option value="Confeccion de Fundas" <%= "Confeccion de Fundas".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Confeccion de Fundas</option>
@@ -188,20 +211,16 @@
                                 <option value="Instalacion de GPS" <%= "Instalacion de GPS".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Instalacion de GPS</option>
                             </select>
                         </td>
-                        <td class="text-white-50"><%= pi.getFechaPedido() %></td>
-                        <td><button type="submit" class="btn btn-sm btn-outline-light">Guardar</button></td>
+                        <td><%= pi.getFechaPedido() %></td>
+                        <td><button type="submit" class="app-button app-button-secondary">Guardar</button></td>
                     </form>
                 </tr>
-                <%
-                        }
-                    }
-                %>
+                <% }
+                } %>
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </section>
+</main>
 </body>
 </html>
