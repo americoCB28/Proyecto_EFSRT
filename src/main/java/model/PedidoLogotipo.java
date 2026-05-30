@@ -6,6 +6,7 @@ public class PedidoLogotipo {
     private String servicioSeleccionado;
     private String fechaPedido;
     private String nombreCliente;
+    private String estado;
 
     public int getIdPedidoLogotipo() { return idPedidoLogotipo; }
     public void setIdPedidoLogotipo(int idPedidoLogotipo) { this.idPedidoLogotipo = idPedidoLogotipo; }
@@ -23,4 +24,7 @@ public class PedidoLogotipo {
 
     public String getNombreCliente() { return nombreCliente; }
     public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
+
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 }

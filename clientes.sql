@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS pedidos (
   idPedido INT NOT NULL AUTO_INCREMENT,
   material VARCHAR(50) NOT NULL,
   luzVisible VARCHAR(10) NOT NULL,
+  estado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
   idCliente INT NOT NULL,
   fechaPedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (idPedido),
@@ -36,6 +37,7 @@ CREATE TABLE IF NOT EXISTS pedidosLogotipo (
   idPedidoLogotipo INT NOT NULL AUTO_INCREMENT,
   idCliente INT NOT NULL,
   servicioSeleccionado VARCHAR(100) NOT NULL,
+  estado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
   fechaPedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (idPedidoLogotipo),
   KEY idx_pedidosLogotipo_idCliente (idCliente),
@@ -49,6 +51,7 @@ CREATE TABLE IF NOT EXISTS pedidosInstalaciones (
   idPedidoInstalacion INT NOT NULL AUTO_INCREMENT,
   idCliente INT NOT NULL,
   servicioSeleccionado VARCHAR(100) NOT NULL,
+  estado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
   fechaPedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (idPedidoInstalacion),
   KEY idx_pedidosInstalaciones_idCliente (idCliente),
@@ -57,6 +60,54 @@ CREATE TABLE IF NOT EXISTS pedidosInstalaciones (
     ON DELETE CASCADE
     ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET @pedidos_estado_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = 'db_gestion_servicios'
+    AND TABLE_NAME = 'pedidos'
+    AND COLUMN_NAME = 'estado'
+);
+SET @pedidos_estado_sql = IF(
+  @pedidos_estado_exists = 0,
+  'ALTER TABLE pedidos ADD COLUMN estado VARCHAR(20) NOT NULL DEFAULT ''pendiente''',
+  'SELECT 1'
+);
+PREPARE stmt_pedidos_estado FROM @pedidos_estado_sql;
+EXECUTE stmt_pedidos_estado;
+DEALLOCATE PREPARE stmt_pedidos_estado;
+
+SET @pedidos_logotipo_estado_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = 'db_gestion_servicios'
+    AND TABLE_NAME = 'pedidosLogotipo'
+    AND COLUMN_NAME = 'estado'
+);
+SET @pedidos_logotipo_estado_sql = IF(
+  @pedidos_logotipo_estado_exists = 0,
+  'ALTER TABLE pedidosLogotipo ADD COLUMN estado VARCHAR(20) NOT NULL DEFAULT ''pendiente''',
+  'SELECT 1'
+);
+PREPARE stmt_pedidos_logotipo_estado FROM @pedidos_logotipo_estado_sql;
+EXECUTE stmt_pedidos_logotipo_estado;
+DEALLOCATE PREPARE stmt_pedidos_logotipo_estado;
+
+SET @pedidos_instalaciones_estado_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = 'db_gestion_servicios'
+    AND TABLE_NAME = 'pedidosInstalaciones'
+    AND COLUMN_NAME = 'estado'
+);
+SET @pedidos_instalaciones_estado_sql = IF(
+  @pedidos_instalaciones_estado_exists = 0,
+  'ALTER TABLE pedidosInstalaciones ADD COLUMN estado VARCHAR(20) NOT NULL DEFAULT ''pendiente''',
+  'SELECT 1'
+);
+PREPARE stmt_pedidos_instalaciones_estado FROM @pedidos_instalaciones_estado_sql;
+EXECUTE stmt_pedidos_instalaciones_estado;
+DEALLOCATE PREPARE stmt_pedidos_instalaciones_estado;
 
 CREATE TABLE IF NOT EXISTS usuarios (
   idUsuario INT NOT NULL AUTO_INCREMENT,
@@ -93,20 +144,20 @@ WHERE NOT EXISTS (
   SELECT 1 FROM clientes WHERE idCliente = 3
 );
 
-INSERT INTO pedidos (idPedido, material, luzVisible, idCliente, fechaPedido)
-SELECT 1, 'nanoCarbono', '35%', 1, CURRENT_TIMESTAMP
+INSERT INTO pedidos (idPedido, material, luzVisible, estado, idCliente, fechaPedido)
+SELECT 1, 'nanoCarbono', '35%', 'pendiente', 1, CURRENT_TIMESTAMP
 WHERE NOT EXISTS (
   SELECT 1 FROM pedidos WHERE idPedido = 1
 );
 
-INSERT INTO pedidosLogotipo (idPedidoLogotipo, idCliente, servicioSeleccionado, fechaPedido)
-SELECT 1, 2, 'Placa Provisional', CURRENT_TIMESTAMP
+INSERT INTO pedidosLogotipo (idPedidoLogotipo, idCliente, servicioSeleccionado, estado, fechaPedido)
+SELECT 1, 2, 'Placa Provisional', 'pendiente', CURRENT_TIMESTAMP
 WHERE NOT EXISTS (
   SELECT 1 FROM pedidosLogotipo WHERE idPedidoLogotipo = 1
 );
 
-INSERT INTO pedidosInstalaciones (idPedidoInstalacion, idCliente, servicioSeleccionado, fechaPedido)
-SELECT 1, 3, 'Tapizado de Techo', CURRENT_TIMESTAMP
+INSERT INTO pedidosInstalaciones (idPedidoInstalacion, idCliente, servicioSeleccionado, estado, fechaPedido)
+SELECT 1, 3, 'Tapizado de Techo', 'pendiente', CURRENT_TIMESTAMP
 WHERE NOT EXISTS (
   SELECT 1 FROM pedidosInstalaciones WHERE idPedidoInstalacion = 1
 );

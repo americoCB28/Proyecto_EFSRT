@@ -6,6 +6,7 @@ public class PedidoInstalacion {
     private String servicioSeleccionado;
     private String fechaPedido;
     private String nombreCliente;	
+    private String estado;
 
     public int getIdPedidoInstalacion() { return idPedidoInstalacion; }
     public void setIdPedidoInstalacion(int idPedidoInstalacion) { this.idPedidoInstalacion = idPedidoInstalacion; }
@@ -21,4 +22,7 @@ public class PedidoInstalacion {
     
     public String getNombreCliente() { return nombreCliente; }
     public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
+
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 }

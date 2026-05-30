@@ -22,6 +22,12 @@ public final class InputValidator {
             "Instalacion de Radio",
             "Instalacion de GPS"
     );
+    private static final Set<String> ESTADOS_VALIDOS = Set.of(
+            "pendiente",
+            "en_proceso",
+            "terminado",
+            "cancelado"
+    );
 
     private InputValidator() {
     }
@@ -48,6 +54,10 @@ public final class InputValidator {
 
     public static boolean esServicioInstalacionValido(String servicioSeleccionado) {
         return INSTALACIONES_VALIDAS.contains(servicioSeleccionado);
+    }
+
+    public static boolean esEstadoPedidoValido(String estado) {
+        return ESTADOS_VALIDOS.contains(estado);
     }
 
     public static boolean esIdPositivo(String valor) {

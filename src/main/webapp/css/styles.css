@@ -459,6 +459,38 @@ body.app-body {
   justify-content: flex-start;
 }
 
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.status-pendiente {
+  background: rgba(251, 191, 36, 0.18);
+  color: #fde68a;
+}
+
+.status-en_proceso {
+  background: rgba(56, 189, 248, 0.18);
+  color: #bae6fd;
+}
+
+.status-terminado {
+  background: rgba(34, 197, 94, 0.18);
+  color: #bbf7d0;
+}
+
+.status-cancelado {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fecaca;
+}
+
 .table-title {
   display: flex;
   align-items: center;

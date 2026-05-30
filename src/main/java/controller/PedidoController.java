@@ -137,11 +137,12 @@ public class PedidoController extends HttpServlet {
         PedidoLogotipo pedido = new PedidoLogotipo();
         pedido.setIdCliente(idCliente);
         pedido.setServicioSeleccionado(servicioSeleccionado);
+        pedido.setEstado("pendiente");
         pedidoDAO.crearPedidoLogotipo(pedido);
 
         request.setAttribute("tituloConfirmacion", "Pedido registrado correctamente");
         request.setAttribute("mensajeConfirmacion", "Tu solicitud de logotipo fue registrada. Puedes volver al inicio o registrar otro pedido.");
-        request.setAttribute("areaConfirmacion", "Por favor aproximarse al área de Diseño.");
+        request.setAttribute("areaConfirmacion", "Por favor aproximarse al area de Diseno.");
         request.setAttribute("rutaNuevoPedido", "servicio?tipo=logotipos");
         request.getRequestDispatcher("/confirmacionLogotipo.jsp").forward(request, response);
     }
@@ -166,11 +167,12 @@ public class PedidoController extends HttpServlet {
         PedidoInstalacion pedido = new PedidoInstalacion();
         pedido.setIdCliente(idCliente);
         pedido.setServicioSeleccionado(servicioSeleccionado);
+        pedido.setEstado("pendiente");
         pedidoDAO.crearPedidoInstalacion(pedido);
 
         request.setAttribute("tituloConfirmacion", "Pedido registrado correctamente");
-        request.setAttribute("mensajeConfirmacion", "Tu solicitud de instalación fue registrada. Puedes volver al inicio o registrar otro pedido.");
-        request.setAttribute("areaConfirmacion", "Por favor aproximarse al área de Instalaciones.");
+        request.setAttribute("mensajeConfirmacion", "Tu solicitud de instalacion fue registrada. Puedes volver al inicio o registrar otro pedido.");
+        request.setAttribute("areaConfirmacion", "Por favor aproximarse al area de Instalaciones.");
         request.setAttribute("rutaNuevoPedido", "servicio?tipo=instalaciones");
         request.getRequestDispatcher("/confirmacionInstalaciones.jsp").forward(request, response);
     }
@@ -197,12 +199,13 @@ public class PedidoController extends HttpServlet {
         Pedido pedido = new Pedido();
         pedido.setMaterial(material);
         pedido.setLuzVisible(luzVisible);
+        pedido.setEstado("pendiente");
         pedido.setIdCliente(idCliente);
         pedidoDAO.crearPedidoPolarizado(pedido);
 
         request.setAttribute("tituloConfirmacion", "Pedido registrado correctamente");
         request.setAttribute("mensajeConfirmacion", "Tu solicitud de polarizado fue registrada. Puedes volver al inicio o registrar otro pedido.");
-        request.setAttribute("areaConfirmacion", "Por favor aproximarse al área de Polarizado.");
+        request.setAttribute("areaConfirmacion", "Por favor aproximarse al area de Polarizado.");
         request.setAttribute("rutaNuevoPedido", "servicio?tipo=polarizado");
         request.getRequestDispatcher("/confirmacionPolarizado.jsp").forward(request, response);
     }
@@ -225,11 +228,13 @@ public class PedidoController extends HttpServlet {
         String idPedido = request.getParameter("idPedido");
         String material = request.getParameter("material");
         String luzVisible = request.getParameter("luzVisible");
+        String estado = request.getParameter("estado");
 
         if (InputValidator.esIdPositivo(idPedido)
                 && InputValidator.esMaterialValido(material)
-                && InputValidator.esLuzVisibleValida(luzVisible)) {
-            pedidoDAO.actualizarPedidoPolarizado(Integer.parseInt(idPedido), material, luzVisible);
+                && InputValidator.esLuzVisibleValida(luzVisible)
+                && InputValidator.esEstadoPedidoValido(estado)) {
+            pedidoDAO.actualizarPedidoPolarizado(Integer.parseInt(idPedido), material, luzVisible, estado);
             SessionUtil.guardarFlashSuccess(request, "Pedido de polarizado actualizado correctamente.");
         } else {
             SessionUtil.guardarFlashWarning(request, "No se pudo actualizar el pedido de polarizado. Verifica los datos enviados.");
@@ -241,10 +246,12 @@ public class PedidoController extends HttpServlet {
     private void actualizarLogotipo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String idPedidoLogotipo = request.getParameter("idPedidoLogotipo");
         String servicioSeleccionado = request.getParameter("servicioSeleccionado");
+        String estado = request.getParameter("estado");
 
         if (InputValidator.esIdPositivo(idPedidoLogotipo)
-                && InputValidator.esServicioLogotipoValido(servicioSeleccionado)) {
-            pedidoDAO.actualizarPedidoLogotipo(Integer.parseInt(idPedidoLogotipo), servicioSeleccionado);
+                && InputValidator.esServicioLogotipoValido(servicioSeleccionado)
+                && InputValidator.esEstadoPedidoValido(estado)) {
+            pedidoDAO.actualizarPedidoLogotipo(Integer.parseInt(idPedidoLogotipo), servicioSeleccionado, estado);
             SessionUtil.guardarFlashSuccess(request, "Pedido de logotipo actualizado correctamente.");
         } else {
             SessionUtil.guardarFlashWarning(request, "No se pudo actualizar el pedido de logotipo. Verifica los datos enviados.");
@@ -256,13 +263,15 @@ public class PedidoController extends HttpServlet {
     private void actualizarInstalacion(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String idPedidoInstalacion = request.getParameter("idPedidoInstalacion");
         String servicioSeleccionado = request.getParameter("servicioSeleccionado");
+        String estado = request.getParameter("estado");
 
         if (InputValidator.esIdPositivo(idPedidoInstalacion)
-                && InputValidator.esServicioInstalacionValido(servicioSeleccionado)) {
-            pedidoDAO.actualizarPedidoInstalacion(Integer.parseInt(idPedidoInstalacion), servicioSeleccionado);
-            SessionUtil.guardarFlashSuccess(request, "Pedido de instalación actualizado correctamente.");
+                && InputValidator.esServicioInstalacionValido(servicioSeleccionado)
+                && InputValidator.esEstadoPedidoValido(estado)) {
+            pedidoDAO.actualizarPedidoInstalacion(Integer.parseInt(idPedidoInstalacion), servicioSeleccionado, estado);
+            SessionUtil.guardarFlashSuccess(request, "Pedido de instalacion actualizado correctamente.");
         } else {
-            SessionUtil.guardarFlashWarning(request, "No se pudo actualizar el pedido de instalación. Verifica los datos enviados.");
+            SessionUtil.guardarFlashWarning(request, "No se pudo actualizar el pedido de instalacion. Verifica los datos enviados.");
         }
 
         response.sendRedirect("servicio?tipo=reportes");

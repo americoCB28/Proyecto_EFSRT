@@ -7,6 +7,7 @@ public class Pedido {
     private int idCliente;
     private String fechaPedido;
     private String nombreCliente;
+    private String estado;
 
     public int getIdPedido() { return idPedido; }
     public void setIdPedido(int idPedido) { this.idPedido = idPedido; }
@@ -25,4 +26,7 @@ public class Pedido {
     
     public String getNombreCliente() { return nombreCliente; }
     public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
+
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 }

@@ -7,6 +7,7 @@ public class ResumenPedidoReciente {
     private String nombreCliente;
     private String detalle;
     private String fechaPedido;
+    private String estado;
 
     public String getTipoServicio() {
         return tipoServicio;
@@ -46,5 +47,13 @@ public class ResumenPedidoReciente {
 
     public void setFechaPedido(String fechaPedido) {
         this.fechaPedido = fechaPedido;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

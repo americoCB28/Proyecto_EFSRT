@@ -81,6 +81,7 @@
                     <th>ID</th>
                     <th>Cliente</th>
                     <th>Detalle</th>
+                    <th>Estado</th>
                     <th>Fecha</th>
                 </tr>
                 </thead>
@@ -92,6 +93,7 @@
                     <td><%= pedido.getIdReferencia() %></td>
                     <td><%= pedido.getNombreCliente() %></td>
                     <td><%= pedido.getDetalle() %></td>
+                    <td><span class="status-pill status-<%= pedido.getEstado() %>"><%= pedido.getEstado() %></span></td>
                     <td><%= pedido.getFechaPedido() %></td>
                 </tr>
                 <% }

@@ -125,6 +125,7 @@
                     <th>Cliente</th>
                     <th>Material</th>
                     <th>Luz Visible</th>
+                    <th>Estado</th>
                     <th>Fecha</th>
                 </tr>
                 </thead>
@@ -136,6 +137,7 @@
                     <td><%= p.getNombreCliente() %></td>
                     <td><%= p.getMaterial() %></td>
                     <td><%= p.getLuzVisible() %></td>
+                    <td><span class="status-pill status-<%= p.getEstado() %>"><%= p.getEstado() %></span></td>
                     <td><%= p.getFechaPedido() %></td>
                 </tr>
                 <% }
@@ -158,6 +160,7 @@
                     <th>ID Pedido</th>
                     <th>Cliente</th>
                     <th>Servicio</th>
+                    <th>Estado</th>
                     <th>Fecha</th>
                 </tr>
                 </thead>
@@ -168,6 +171,7 @@
                     <td><%= pl.getIdPedidoLogotipo() %></td>
                     <td><%= pl.getNombreCliente() %></td>
                     <td><%= pl.getServicioSeleccionado() %></td>
+                    <td><span class="status-pill status-<%= pl.getEstado() %>"><%= pl.getEstado() %></span></td>
                     <td><%= pl.getFechaPedido() %></td>
                 </tr>
                 <% }
@@ -190,6 +194,7 @@
                     <th>ID Pedido</th>
                     <th>Cliente</th>
                     <th>Servicio</th>
+                    <th>Estado</th>
                     <th>Fecha</th>
                 </tr>
                 </thead>
@@ -200,6 +205,7 @@
                     <td><%= pi.getIdPedidoInstalacion() %></td>
                     <td><%= pi.getNombreCliente() %></td>
                     <td><%= pi.getServicioSeleccionado() %></td>
+                    <td><span class="status-pill status-<%= pi.getEstado() %>"><%= pi.getEstado() %></span></td>
                     <td><%= pi.getFechaPedido() %></td>
                 </tr>
                 <% }

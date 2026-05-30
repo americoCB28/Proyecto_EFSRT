@@ -35,6 +35,7 @@ public class DashboardDAO {
                     SELECT 'Polarizado' AS tipoServicio, p.idPedido AS idReferencia,
                            c.nombre AS nombreCliente,
                            CONCAT(p.material, ' / ', p.luzVisible) AS detalle,
+                           p.estado AS estado,
                            p.fechaPedido AS fechaPedido
                     FROM pedidos p
                     JOIN clientes c ON p.idCliente = c.idCliente
@@ -42,6 +43,7 @@ public class DashboardDAO {
                     SELECT 'Logotipo' AS tipoServicio, pl.idPedidoLogotipo AS idReferencia,
                            c.nombre AS nombreCliente,
                            pl.servicioSeleccionado AS detalle,
+                           pl.estado AS estado,
                            pl.fechaPedido AS fechaPedido
                     FROM pedidosLogotipo pl
                     JOIN clientes c ON pl.idCliente = c.idCliente
@@ -49,6 +51,7 @@ public class DashboardDAO {
                     SELECT 'Instalacion' AS tipoServicio, pi.idPedidoInstalacion AS idReferencia,
                            c.nombre AS nombreCliente,
                            pi.servicioSeleccionado AS detalle,
+                           pi.estado AS estado,
                            pi.fechaPedido AS fechaPedido
                     FROM pedidosInstalaciones pi
                     JOIN clientes c ON pi.idCliente = c.idCliente
@@ -68,6 +71,7 @@ public class DashboardDAO {
                     pedido.setIdReferencia(rs.getInt("idReferencia"));
                     pedido.setNombreCliente(rs.getString("nombreCliente"));
                     pedido.setDetalle(rs.getString("detalle"));
+                    pedido.setEstado(rs.getString("estado"));
                     pedido.setFechaPedido(rs.getString("fechaPedido"));
                     pedidos.add(pedido);
                 }

@@ -95,6 +95,7 @@
                     <th>Cliente</th>
                     <th>Material</th>
                     <th>Luz Visible</th>
+                    <th>Estado</th>
                     <th>Fecha</th>
                     <th>Accion</th>
                 </tr>
@@ -123,6 +124,14 @@
                                 <option value="50%" <%= "50%".equals(p.getLuzVisible()) ? "selected" : "" %>>50%</option>
                             </select>
                         </td>
+                        <td>
+                            <select name="estado" class="form-select app-field">
+                                <option value="pendiente" <%= "pendiente".equals(p.getEstado()) ? "selected" : "" %>>pendiente</option>
+                                <option value="en_proceso" <%= "en_proceso".equals(p.getEstado()) ? "selected" : "" %>>en_proceso</option>
+                                <option value="terminado" <%= "terminado".equals(p.getEstado()) ? "selected" : "" %>>terminado</option>
+                                <option value="cancelado" <%= "cancelado".equals(p.getEstado()) ? "selected" : "" %>>cancelado</option>
+                            </select>
+                        </td>
                         <td><%= p.getFechaPedido() %></td>
                         <td><button type="submit" class="app-button app-button-secondary">Guardar</button></td>
                     </form>
@@ -145,6 +154,7 @@
                     <th>ID</th>
                     <th>Cliente</th>
                     <th>Servicio</th>
+                    <th>Estado</th>
                     <th>Fecha</th>
                     <th>Accion</th>
                 </tr>
@@ -166,6 +176,14 @@
                                 <option value="Forrado de techo" <%= "Forrado de techo".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Forrado de techo</option>
                                 <option value="Forrado de pisaderas" <%= "Forrado de pisaderas".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Forrado de pisaderas</option>
                                 <option value="Manijas" <%= "Manijas".equals(pl.getServicioSeleccionado()) ? "selected" : "" %>>Manijas</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="estado" class="form-select app-field">
+                                <option value="pendiente" <%= "pendiente".equals(pl.getEstado()) ? "selected" : "" %>>pendiente</option>
+                                <option value="en_proceso" <%= "en_proceso".equals(pl.getEstado()) ? "selected" : "" %>>en_proceso</option>
+                                <option value="terminado" <%= "terminado".equals(pl.getEstado()) ? "selected" : "" %>>terminado</option>
+                                <option value="cancelado" <%= "cancelado".equals(pl.getEstado()) ? "selected" : "" %>>cancelado</option>
                             </select>
                         </td>
                         <td><%= pl.getFechaPedido() %></td>
@@ -190,6 +208,7 @@
                     <th>ID</th>
                     <th>Cliente</th>
                     <th>Servicio</th>
+                    <th>Estado</th>
                     <th>Fecha</th>
                     <th>Accion</th>
                 </tr>
@@ -210,6 +229,14 @@
                                 <option value="Confeccion de Fundas" <%= "Confeccion de Fundas".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Confeccion de Fundas</option>
                                 <option value="Instalacion de Radio" <%= "Instalacion de Radio".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Instalacion de Radio</option>
                                 <option value="Instalacion de GPS" <%= "Instalacion de GPS".equals(pi.getServicioSeleccionado()) ? "selected" : "" %>>Instalacion de GPS</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="estado" class="form-select app-field">
+                                <option value="pendiente" <%= "pendiente".equals(pi.getEstado()) ? "selected" : "" %>>pendiente</option>
+                                <option value="en_proceso" <%= "en_proceso".equals(pi.getEstado()) ? "selected" : "" %>>en_proceso</option>
+                                <option value="terminado" <%= "terminado".equals(pi.getEstado()) ? "selected" : "" %>>terminado</option>
+                                <option value="cancelado" <%= "cancelado".equals(pi.getEstado()) ? "selected" : "" %>>cancelado</option>
                             </select>
                         </td>
                         <td><%= pi.getFechaPedido() %></td>
