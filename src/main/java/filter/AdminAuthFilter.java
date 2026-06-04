@@ -14,11 +14,15 @@ import java.util.Set;
 @WebFilter(urlPatterns = {
         "/servicio",
         "/usuarios",
+        "/servicios-admin",
+        "/admin-citas",
         "/dashboard.jsp",
         "/reportes.jsp",
         "/actualizarReporte.jsp",
         "/historialCliente.jsp",
-        "/usuarios.jsp"
+        "/usuarios.jsp",
+        "/serviciosAdmin.jsp",
+        "/adminCitas.jsp"
 })
 public class AdminAuthFilter implements Filter {
 
@@ -63,7 +67,11 @@ public class AdminAuthFilter implements Filter {
                 || "/actualizarReporte.jsp".equals(servletPath)
                 || "/historialCliente.jsp".equals(servletPath)
                 || "/usuarios.jsp".equals(servletPath)
-                || "/usuarios".equals(servletPath)) {
+                || "/serviciosAdmin.jsp".equals(servletPath)
+                || "/adminCitas.jsp".equals(servletPath)
+                || "/usuarios".equals(servletPath)
+                || "/servicios-admin".equals(servletPath)
+                || "/admin-citas".equals(servletPath)) {
             return true;
         }
 
@@ -79,6 +87,9 @@ public class AdminAuthFilter implements Filter {
         if ("POST".equalsIgnoreCase(request.getMethod())) {
             if ("/usuarios".equals(request.getServletPath())) {
                 return request.getContextPath() + "/usuarios";
+            }
+            if ("/servicios-admin".equals(request.getServletPath())) {
+                return request.getContextPath() + "/servicios-admin";
             }
             return request.getContextPath() + "/servicio?tipo=reportes";
         }

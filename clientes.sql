@@ -120,6 +120,59 @@ CREATE TABLE IF NOT EXISTS usuarios (
   UNIQUE KEY uk_usuarios_username (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS catalogoServicios (
+  idCatalogoServicio INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(100) NOT NULL,
+  slug VARCHAR(50) NOT NULL,
+  tipoBase VARCHAR(30) NOT NULL,
+  descripcionCorta VARCHAR(180) NOT NULL,
+  precioBase DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  duracionMinutos INT NOT NULL DEFAULT 60,
+  activo TINYINT(1) NOT NULL DEFAULT 1,
+  requiereCita TINYINT(1) NOT NULL DEFAULT 1,
+  ordenVisual INT NOT NULL DEFAULT 1,
+  fechaCreacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (idCatalogoServicio),
+  UNIQUE KEY uk_catalogoServicios_slug (slug)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS citas (
+  idCita INT NOT NULL AUTO_INCREMENT,
+  idCatalogoServicio INT DEFAULT NULL,
+  idTecnicoAsignado INT DEFAULT NULL,
+  codigoVerificacion VARCHAR(50) DEFAULT NULL,
+  tokenVerificacion VARCHAR(120) DEFAULT NULL,
+  tipoServicio VARCHAR(30) NOT NULL,
+  detalleServicio VARCHAR(255) NOT NULL,
+  material VARCHAR(50) DEFAULT NULL,
+  luzVisible VARCHAR(10) DEFAULT NULL,
+  servicioSeleccionado VARCHAR(100) DEFAULT NULL,
+  fechaCita DATE DEFAULT NULL,
+  franjaHoraria VARCHAR(30) DEFAULT NULL,
+  nombreCliente VARCHAR(100) DEFAULT NULL,
+  correoCliente VARCHAR(120) DEFAULT NULL,
+  telefonoCliente VARCHAR(30) DEFAULT NULL,
+  precioEstimado DECIMAL(10,2) DEFAULT NULL,
+  estadoCita VARCHAR(20) NOT NULL DEFAULT 'pendiente',
+  canalEntrega VARCHAR(20) DEFAULT NULL,
+  observaciones VARCHAR(255) DEFAULT NULL,
+  fechaRegistro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (idCita),
+  KEY idx_citas_idCatalogoServicio (idCatalogoServicio),
+  KEY idx_citas_idTecnicoAsignado (idTecnicoAsignado),
+  KEY idx_citas_tipoServicio (tipoServicio),
+  KEY idx_citas_fechaCita (fechaCita),
+  KEY idx_citas_estadoCita (estadoCita),
+  CONSTRAINT fk_citas_catalogoServicios
+    FOREIGN KEY (idCatalogoServicio) REFERENCES catalogoServicios (idCatalogoServicio)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_citas_usuarios_tecnico
+    FOREIGN KEY (idTecnicoAsignado) REFERENCES usuarios (idUsuario)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 INSERT INTO servicios (idServicio, logotipos, polarizado, instalaciones)
 SELECT 1, 'Solicitar', 'Solicitar', 'Solicitar'
 WHERE NOT EXISTS (
@@ -166,4 +219,28 @@ INSERT INTO usuarios (idUsuario, username, passwordHash, rol, activo)
 SELECT 1, 'admin', '65536:R933u4hPpg+opiuCr70eug==:yklbRsi08MvwypzCmYc3rqDrfy4xK/ZPGIl5w16UgTI=', 'ADMIN', 1
 WHERE NOT EXISTS (
   SELECT 1 FROM usuarios WHERE idUsuario = 1
+);
+
+INSERT INTO usuarios (idUsuario, username, passwordHash, rol, activo)
+SELECT 2, 'tecnico', '65536:AItkZZnS5SbZBiduNMk4Sg==:OFhIYwvpNUrLLU+v9JHfUr5yxghd5n7LYl5tQAL7vbE=', 'TECNICO', 1
+WHERE NOT EXISTS (
+  SELECT 1 FROM usuarios WHERE idUsuario = 2
+);
+
+INSERT INTO catalogoServicios (idCatalogoServicio, nombre, slug, tipoBase, descripcionCorta, precioBase, duracionMinutos, activo, requiereCita, ordenVisual)
+SELECT 1, 'Polarizado vehicular', 'polarizado-vehicular', 'polarizado', 'Servicio profesional de polarizado con control de calor y luz visible.', 350.00, 120, 1, 1, 1
+WHERE NOT EXISTS (
+  SELECT 1 FROM catalogoServicios WHERE idCatalogoServicio = 1
+);
+
+INSERT INTO catalogoServicios (idCatalogoServicio, nombre, slug, tipoBase, descripcionCorta, precioBase, duracionMinutos, activo, requiereCita, ordenVisual)
+SELECT 2, 'Logotipo vehicular', 'logotipo-vehicular', 'logotipo', 'Aplicacion de piezas graficas, placas temporales y acabados visuales.', 180.00, 90, 1, 1, 2
+WHERE NOT EXISTS (
+  SELECT 1 FROM catalogoServicios WHERE idCatalogoServicio = 2
+);
+
+INSERT INTO catalogoServicios (idCatalogoServicio, nombre, slug, tipoBase, descripcionCorta, precioBase, duracionMinutos, activo, requiereCita, ordenVisual)
+SELECT 3, 'Instalaciones automotrices', 'instalaciones-automotrices', 'instalacion', 'Instalacion de accesorios y mejoras interiores para el vehiculo.', 220.00, 120, 1, 1, 3
+WHERE NOT EXISTS (
+  SELECT 1 FROM catalogoServicios WHERE idCatalogoServicio = 3
 );

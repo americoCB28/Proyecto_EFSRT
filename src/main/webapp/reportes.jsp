@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reportes</title>
+    <title>Reportes de Atencion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
@@ -29,11 +29,13 @@
     <div class="app-topbar-inner">
         <div class="brand-stack">
             <span class="brand-title">Panel Administrativo</span>
-            <span class="brand-subtitle">Consulta clientes y pedidos registrados desde una sola vista</span>
+            <span class="brand-subtitle">Consulta clientes, citas y atenciones registradas desde una sola vista</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
+            <a href="admin-citas" class="app-button app-button-info">Validar citas</a>
+            <a href="servicios-admin" class="app-button app-button-info">Servicios</a>
             <a href="usuarios" class="app-button app-button-info">Usuarios</a>
             <a href="servicio?tipo=actualizarReporte" class="app-button app-button-info">Modificar</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
@@ -44,13 +46,13 @@
 <main class="app-shell page-section">
     <section class="section-hero">
         <span class="eyebrow">Zona protegida</span>
-        <h1 class="form-title mt-3">Reportes y seguimiento</h1>
-        <p class="form-subtitle">Esta pantalla prioriza legibilidad, espaciado y navegacion clara para revisar la informacion actual.</p>
+        <h1 class="form-title mt-3">Reportes de citas y atenciones</h1>
+        <p class="form-subtitle">Esta pantalla centraliza la agenda comercial y los registros operativos del taller.</p>
     </section>
 
     <section class="table-card">
         <div class="table-title">
-            <h3>Filtros de reportes</h3>
+            <h3>Filtros de agenda y atenciones</h3>
         </div>
         <form action="servicio" method="get" class="filter-grid">
             <input type="hidden" name="tipo" value="reportes">
@@ -88,7 +90,7 @@
             <input type="hidden" name="cliente" value="<%= clienteFiltro == null ? "" : clienteFiltro %>">
             <input type="hidden" name="servicioFiltro" value="<%= servicioFiltro == null ? "todos" : servicioFiltro %>">
             <input type="hidden" name="estadoFiltro" value="<%= estadoFiltro == null ? "todos" : estadoFiltro %>">
-            <button type="submit" class="app-button app-button-info">Exportar CSV</button>
+            <button type="submit" class="app-button app-button-info">Exportar atenciones CSV</button>
         </form>
     </section>
 
@@ -106,7 +108,7 @@
 
     <section class="table-card">
         <div class="table-title">
-            <h3>Clientes registrados</h3>
+            <h3>Clientes atendidos y registrados</h3>
             <a href="servicio?tipo=actualizarReporte" class="app-button app-button-outline">Editar datos</a>
         </div>
         <div class="table-responsive-shell">
@@ -139,13 +141,13 @@
     <% if ("todos".equals(servicioFiltro) || "polarizado".equals(servicioFiltro)) { %>
     <section class="table-card">
         <div class="table-title">
-            <h3>Pedidos de polarizado</h3>
+            <h3>Atenciones de polarizado</h3>
         </div>
         <div class="table-responsive-shell">
             <table class="admin-table">
                 <thead>
                 <tr>
-                    <th>ID Pedido</th>
+                    <th>ID Registro</th>
                     <th>Cliente</th>
                     <th>Material</th>
                     <th>Luz Visible</th>
@@ -175,13 +177,13 @@
     <% if ("todos".equals(servicioFiltro) || "logotipo".equals(servicioFiltro)) { %>
     <section class="table-card">
         <div class="table-title">
-            <h3>Pedidos de logotipos</h3>
+            <h3>Atenciones de logotipos</h3>
         </div>
         <div class="table-responsive-shell">
             <table class="admin-table">
                 <thead>
                 <tr>
-                    <th>ID Pedido</th>
+                    <th>ID Registro</th>
                     <th>Cliente</th>
                     <th>Servicio</th>
                     <th>Estado</th>
@@ -209,13 +211,13 @@
     <% if ("todos".equals(servicioFiltro) || "instalacion".equals(servicioFiltro)) { %>
     <section class="table-card">
         <div class="table-title">
-            <h3>Pedidos de instalaciones</h3>
+            <h3>Atenciones de instalaciones</h3>
         </div>
         <div class="table-responsive-shell">
             <table class="admin-table">
                 <thead>
                 <tr>
-                    <th>ID Pedido</th>
+                    <th>ID Registro</th>
                     <th>Cliente</th>
                     <th>Servicio</th>
                     <th>Estado</th>

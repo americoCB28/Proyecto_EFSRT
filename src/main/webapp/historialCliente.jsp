@@ -26,12 +26,14 @@
     <div class="app-topbar-inner">
         <div class="brand-stack">
             <span class="brand-title">Historial por Cliente</span>
-            <span class="brand-subtitle">Consulta consolidada de pedidos asociados a un cliente</span>
+            <span class="brand-subtitle">Consulta consolidada de citas y atenciones asociadas a un cliente</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
-            <a href="servicio?tipo=reportes" class="app-button app-button-info">Reportes</a>
+            <a href="servicio?tipo=reportes" class="app-button app-button-info">Atenciones</a>
+            <a href="admin-citas" class="app-button app-button-info">Validar citas</a>
+            <a href="servicios-admin" class="app-button app-button-info">Servicios</a>
             <a href="usuarios" class="app-button app-button-info">Usuarios</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
         </div>
@@ -42,7 +44,7 @@
     <section class="section-hero">
         <span class="eyebrow">Vista protegida</span>
         <h1 class="form-title mt-3">Historial del cliente</h1>
-        <p class="form-subtitle">Revisa todos los pedidos asociados al cliente seleccionado sin salir del panel administrativo.</p>
+        <p class="form-subtitle">Revisa todas las atenciones asociadas al cliente seleccionado sin salir del panel administrativo.</p>
     </section>
 
     <div class="flash-wrap">
@@ -68,20 +70,20 @@
         </article>
         <article class="detail-card">
             <div class="detail-label">Resumen</div>
-            <div class="detail-value"><%= pedidos.size() + pedidosLogotipo.size() + pedidosInstalacion.size() %> pedidos registrados</div>
+            <div class="detail-value"><%= pedidos.size() + pedidosLogotipo.size() + pedidosInstalacion.size() %> atenciones registradas</div>
         </article>
     </section>
 
     <section class="table-card">
         <div class="table-title">
-            <h3>Pedidos de polarizado</h3>
-            <a href="servicio?tipo=reportes" class="app-button app-button-outline">Volver a reportes</a>
+            <h3>Atenciones de polarizado</h3>
+            <a href="servicio?tipo=reportes" class="app-button app-button-outline">Volver a atenciones</a>
         </div>
         <div class="table-responsive-shell">
             <table class="admin-table">
                 <thead>
                 <tr>
-                    <th>ID Pedido</th>
+                    <th>ID Registro</th>
                     <th>Material</th>
                     <th>Luz Visible</th>
                     <th>Estado</th>
@@ -101,7 +103,7 @@
                 <% }
                 } else { %>
                 <tr>
-                    <td colspan="5">No hay pedidos de polarizado para este cliente.</td>
+                    <td colspan="5">No hay atenciones de polarizado para este cliente.</td>
                 </tr>
                 <% } %>
                 </tbody>
@@ -111,13 +113,13 @@
 
     <section class="table-card">
         <div class="table-title">
-            <h3>Pedidos de logotipo</h3>
+            <h3>Atenciones de logotipo</h3>
         </div>
         <div class="table-responsive-shell">
             <table class="admin-table">
                 <thead>
                 <tr>
-                    <th>ID Pedido</th>
+                    <th>ID Registro</th>
                     <th>Servicio</th>
                     <th>Estado</th>
                     <th>Fecha</th>
@@ -135,7 +137,7 @@
                 <% }
                 } else { %>
                 <tr>
-                    <td colspan="4">No hay pedidos de logotipo para este cliente.</td>
+                    <td colspan="4">No hay atenciones de logotipo para este cliente.</td>
                 </tr>
                 <% } %>
                 </tbody>
@@ -145,13 +147,13 @@
 
     <section class="table-card">
         <div class="table-title">
-            <h3>Pedidos de instalaciones</h3>
+            <h3>Atenciones de instalaciones</h3>
         </div>
         <div class="table-responsive-shell">
             <table class="admin-table">
                 <thead>
                 <tr>
-                    <th>ID Pedido</th>
+                    <th>ID Registro</th>
                     <th>Servicio</th>
                     <th>Estado</th>
                     <th>Fecha</th>
@@ -169,7 +171,7 @@
                 <% }
                 } else { %>
                 <tr>
-                    <td colspan="4">No hay pedidos de instalaciones para este cliente.</td>
+                    <td colspan="4">No hay atenciones de instalaciones para este cliente.</td>
                 </tr>
                 <% } %>
                 </tbody>

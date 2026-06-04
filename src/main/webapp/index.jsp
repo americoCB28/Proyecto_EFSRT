@@ -12,6 +12,7 @@
 <body class="app-body">
 <%
     boolean admin = SessionUtil.esAdministrador(request);
+    boolean tecnico = SessionUtil.esTecnico(request);
     List<Servicio> servicios = (List<Servicio>) request.getAttribute("servicios");
     Servicio servicio = null;
     if (servicios != null && !servicios.isEmpty()) {
@@ -23,14 +24,20 @@
     <div class="app-topbar-inner">
         <div class="brand-stack">
             <span class="brand-title">Grafica Vehicular</span>
-            <span class="brand-subtitle">Servicios, pedidos y seguimiento en un solo lugar</span>
+            <span class="brand-subtitle">Servicios, citas y seguimiento en un solo lugar</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
             <% if (admin) { %>
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
+            <a href="servicios-admin" class="app-button app-button-info">Servicios</a>
+            <a href="admin-citas" class="app-button app-button-info">Validar citas</a>
             <a href="usuarios" class="app-button app-button-info">Usuarios</a>
             <a href="servicio?tipo=reportes" class="app-button app-button-outline">Reportes</a>
+            <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
+            <% } else if (tecnico) { %>
+            <a href="tecnico" class="app-button app-button-info">Panel tecnico</a>
+            <a href="admin-citas" class="app-button app-button-outline">Agenda de citas</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
             <% } else { %>
             <a href="login" class="app-button app-button-outline">Login Admin</a>
@@ -43,45 +50,44 @@
     <section class="hero-panel">
         <div class="hero-cover">
             <div class="hero-copy">
-                <span class="eyebrow">Experiencia moderna</span>
-                <h1 class="hero-title">Selecciona el servicio ideal para tu vehiculo</h1>
+                <span class="eyebrow">Agenda tu visita</span>
+                <h1 class="hero-title">Reserva la cita ideal para tu vehiculo</h1>
                 <p class="hero-text">
-                    La aplicacion mantiene el flujo actual de pedidos, pero ahora ofrece una navegacion mas clara
-                    para clientes y administradores.
+                    Explora los servicios disponibles, define el trabajo que necesitas y deja listo el horario
+                    preferido para llevar tu vehiculo al taller.
                 </p>
                 <div class="hero-actions">
-                    <a href="servicio?tipo=logotipos" class="app-button app-button-success">Ir a Logotipos</a>
-                    <a href="servicio?tipo=polarizado" class="app-button app-button-info">Ir a Polarizados</a>
-                    <a href="servicio?tipo=instalaciones" class="app-button app-button-warning">Ir a Instalaciones</a>
+                    <a href="citas" class="app-button app-button-success">Agendar cita</a>
+                    <a href="servicio?tipo=reportes" class="app-button app-button-outline">Zona admin</a>
                 </div>
             </div>
         </div>
 
         <div class="section-block">
             <h2 class="section-title">Servicios disponibles</h2>
-            <p class="section-text">Accede al formulario correspondiente y registra tu pedido en pocos pasos.</p>
+            <p class="section-text">Elige el servicio y comienza un flujo de cita pensado para preparar la atencion de tu vehiculo.</p>
 
             <% if (servicio != null) { %>
             <div class="service-grid mt-4">
                 <article class="service-card">
                     <div class="service-kicker">Servicio 01</div>
                     <h3 class="service-title">Logotipos</h3>
-                    <p class="service-description">Diseno y aplicacion de logotipos vehiculares con opciones rapidas de solicitud.</p>
-                    <a href="servicio?tipo=logotipos" class="app-button app-button-success"><%= servicio.getLogotipos() %></a>
+                    <p class="service-description">Diseno y aplicacion de logotipos vehiculares con cita previa para una atencion mas ordenada.</p>
+                    <a href="citas?paso=detalle&servicio=logotipo" class="app-button app-button-success">Agendar logotipo</a>
                 </article>
 
                 <article class="service-card">
                     <div class="service-kicker">Servicio 02</div>
                     <h3 class="service-title">Polarizados</h3>
-                    <p class="service-description">Selecciona material y porcentaje de luz visible en un formulario simple y guiado.</p>
-                    <a href="servicio?tipo=polarizado" class="app-button app-button-info"><%= servicio.getPolarizado() %></a>
+                    <p class="service-description">Selecciona material y porcentaje de luz visible para coordinar mejor la instalacion.</p>
+                    <a href="citas?paso=detalle&servicio=polarizado" class="app-button app-button-info">Agendar polarizado</a>
                 </article>
 
                 <article class="service-card">
                     <div class="service-kicker">Servicio 03</div>
                     <h3 class="service-title">Instalaciones</h3>
-                    <p class="service-description">Registra accesorios e instalaciones automotrices con opciones claras y ordenadas.</p>
-                    <a href="servicio?tipo=instalaciones" class="app-button app-button-warning"><%= servicio.getInstalaciones() %></a>
+                    <p class="service-description">Programa accesorios e instalaciones automotrices con horario preferido de atencion.</p>
+                    <a href="citas?paso=detalle&servicio=instalacion" class="app-button app-button-warning">Agendar instalacion</a>
                 </article>
             </div>
             <% } %>
@@ -89,7 +95,7 @@
             <div class="info-strip">
                 <div class="info-item">
                     <strong>Flujo cliente</strong>
-                    <div class="muted-text mt-2">Inicio, formulario, confirmacion y regreso rapido al menu principal.</div>
+                    <div class="muted-text mt-2">Inicio, eleccion del servicio, detalle tecnico y horario preferido para la cita.</div>
                 </div>
                 <div class="info-item">
                     <strong>Flujo administrador</strong>
@@ -104,8 +110,11 @@
             <div class="hero-actions">
                 <% if (admin) { %>
                 <a href="usuarios" class="app-button app-button-info">Gestionar Usuarios</a>
+                <a href="servicios-admin" class="app-button app-button-outline">Gestionar Servicios</a>
+                <% } else if (tecnico) { %>
+                <a href="tecnico" class="app-button app-button-info">Abrir panel tecnico</a>
                 <% } %>
-                <a href="servicio?tipo=reportes" class="app-button app-button-outline">Ver Reportes</a>
+                <a href="citas" class="app-button app-button-primary">Comenzar una cita</a>
             </div>
         </div>
     </section>

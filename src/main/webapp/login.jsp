@@ -20,7 +20,7 @@
     <div class="app-topbar-inner">
         <div class="brand-stack">
             <span class="brand-title">Acceso Administrativo</span>
-            <span class="brand-subtitle">Ingresa para revisar reportes y mantener pedidos</span>
+            <span class="brand-subtitle">Ingresa para revisar citas, reportes y atenciones registradas</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-outline">Volver al inicio</a>
@@ -32,7 +32,7 @@
     <section class="auth-card mt-4">
         <span class="eyebrow">Login seguro</span>
         <h1 class="form-title mt-3">Panel de administracion</h1>
-        <p class="form-subtitle">Usa tus credenciales para acceder a la zona protegida. El flujo de autenticacion no cambia.</p>
+        <p class="form-subtitle">Usa tus credenciales para gestionar la agenda, validar citas y mantener la operacion del taller.</p>
 
         <% if (error != null && !error.isBlank()) { %>
         <div class="app-alert alert alert-danger" role="alert"><%= error %></div>

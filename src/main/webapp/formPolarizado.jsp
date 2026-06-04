@@ -16,7 +16,7 @@
     <div class="app-topbar-inner">
         <div class="brand-stack">
             <span class="brand-title">Polarizado Vehicular</span>
-            <span class="brand-subtitle">Selecciona material, intensidad y registra tu pedido</span>
+            <span class="brand-subtitle">Selecciona material, intensidad y solicita tu atencion</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
@@ -32,7 +32,7 @@
     <section class="section-hero hero-accent">
         <span class="eyebrow">Servicio 3M</span>
         <h1 class="form-title mt-3">Polarizado profesional</h1>
-        <p class="form-subtitle">Completa el formulario y el sistema registrara tu solicitud sin alterar el flujo actual.</p>
+        <p class="form-subtitle">Completa tus datos y deja registrada tu solicitud de atencion para este servicio.</p>
     </section>
 
     <section class="form-card content-panel">
@@ -107,7 +107,7 @@
             </div>
 
             <div class="stack-actions">
-                <button type="submit" class="app-button app-button-info">Confirmar pedido</button>
+                <button type="submit" class="app-button app-button-info">Registrar solicitud</button>
                 <a href="inicio" class="app-button app-button-secondary">Cancelar</a>
             </div>
 

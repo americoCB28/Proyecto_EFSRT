@@ -30,7 +30,12 @@ public class AuthController extends HttpServlet {
         }
 
         if (SessionUtil.esAdministrador(request)) {
-            response.sendRedirect(request.getContextPath() + "/servicio?tipo=reportes");
+            response.sendRedirect(request.getContextPath() + "/servicio?tipo=dashboard");
+            return;
+        }
+
+        if (SessionUtil.esTecnico(request)) {
+            response.sendRedirect(request.getContextPath() + "/tecnico");
             return;
         }
 
@@ -69,7 +74,9 @@ public class AuthController extends HttpServlet {
         SessionUtil.iniciarSesion(request, usuario);
         String redirect = SessionUtil.consumirRedireccionPendiente(request);
         if (redirect == null || redirect.isBlank()) {
-            redirect = request.getContextPath() + "/servicio?tipo=reportes";
+            redirect = "TECNICO".equalsIgnoreCase(usuario.getRol())
+                    ? request.getContextPath() + "/tecnico"
+                    : request.getContextPath() + "/servicio?tipo=dashboard";
         }
         response.sendRedirect(redirect);
     }

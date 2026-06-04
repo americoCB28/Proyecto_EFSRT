@@ -16,7 +16,7 @@
     <div class="app-topbar-inner">
         <div class="brand-stack">
             <span class="brand-title">Logotipo Vehicular</span>
-            <span class="brand-subtitle">Personaliza tu pedido con opciones claras y ordenadas</span>
+            <span class="brand-subtitle">Define tu servicio y deja lista tu solicitud de atencion</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
@@ -32,7 +32,7 @@
     <section class="section-hero hero-accent">
         <span class="eyebrow">Servicio grafico</span>
         <h1 class="form-title mt-3">Diseno de logotipos</h1>
-        <p class="form-subtitle">Registra una solicitud de forma rapida y selecciona el tipo de trabajo requerido.</p>
+        <p class="form-subtitle">Selecciona el trabajo requerido y registra tu solicitud de forma clara y rapida.</p>
     </section>
 
     <section class="form-card content-panel">
@@ -94,7 +94,7 @@
             </div>
 
             <div class="stack-actions">
-                <button type="submit" class="app-button app-button-success">Confirmar pedido</button>
+                <button type="submit" class="app-button app-button-success">Registrar solicitud</button>
                 <a href="inicio" class="app-button app-button-secondary">Cancelar</a>
             </div>
 

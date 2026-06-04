@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Actualizar Reportes</title>
+    <title>Actualizar Atenciones</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
@@ -24,13 +24,15 @@
 <nav class="app-topbar">
     <div class="app-topbar-inner">
         <div class="brand-stack">
-            <span class="brand-title">Actualizar Reportes</span>
-            <span class="brand-subtitle">Gestiona la informacion y vuelve automaticamente al panel principal</span>
+            <span class="brand-title">Actualizar Atenciones</span>
+            <span class="brand-subtitle">Gestiona registros operativos y vuelve automaticamente al panel principal</span>
         </div>
         <div class="topbar-actions">
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
+            <a href="admin-citas" class="app-button app-button-info">Validar citas</a>
+            <a href="servicios-admin" class="app-button app-button-info">Servicios</a>
             <a href="usuarios" class="app-button app-button-info">Usuarios</a>
-            <a href="servicio?tipo=reportes" class="app-button app-button-info">Volver a Reportes</a>
+            <a href="servicio?tipo=reportes" class="app-button app-button-info">Volver a atenciones</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
         </div>
     </div>
@@ -39,8 +41,8 @@
 <main class="app-shell page-section">
     <section class="section-hero">
         <span class="eyebrow">Modo edicion</span>
-        <h1 class="form-title mt-3">Actualizacion controlada</h1>
-        <p class="form-subtitle">Guarda un cambio por fila y el flujo te devolvera al panel de reportes con un mensaje visible.</p>
+        <h1 class="form-title mt-3">Actualizacion controlada de atenciones</h1>
+        <p class="form-subtitle">Guarda un cambio por fila y vuelve al panel con un mensaje claro de confirmacion.</p>
     </section>
 
     <section class="table-card">
@@ -72,7 +74,7 @@
                             <div class="stacked-forms">
                                 <button type="submit" class="app-button app-button-secondary">Guardar</button>
                         </form>
-                        <form action="servicio" method="post" onsubmit="return confirm('Seguro que deseas eliminar este cliente y todos sus pedidos?')">
+                        <form action="servicio" method="post" onsubmit="return confirm('Seguro que deseas eliminar este cliente y todos sus registros de atencion?')">
                             <input type="hidden" name="tipo" value="eliminarCliente">
                             <input type="hidden" name="idCliente" value="<%= c.getIdCliente() %>">
                             <input type="hidden" name="<%= CsrfUtil.CSRF_REQUEST_PARAM %>" value="<%= csrfToken %>">
@@ -90,7 +92,7 @@
 
     <section class="table-card">
         <div class="table-title">
-            <h3>Pedidos de polarizado</h3>
+            <h3>Atenciones de polarizado</h3>
         </div>
         <div class="table-responsive-shell">
             <table class="admin-table">
@@ -151,7 +153,7 @@
 
     <section class="table-card">
         <div class="table-title">
-            <h3>Pedidos de logotipos</h3>
+            <h3>Atenciones de logotipos</h3>
         </div>
         <div class="table-responsive-shell">
             <table class="admin-table">
@@ -206,7 +208,7 @@
 
     <section class="table-card">
         <div class="table-title">
-            <h3>Pedidos de instalaciones</h3>
+            <h3>Atenciones de instalaciones</h3>
         </div>
         <div class="table-responsive-shell">
             <table class="admin-table">

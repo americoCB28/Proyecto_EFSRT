@@ -16,7 +16,7 @@
     <div class="app-topbar-inner">
         <div class="brand-stack">
             <span class="brand-title">Instalaciones Automotrices</span>
-            <span class="brand-subtitle">Registra el servicio y dirige al cliente al area indicada</span>
+            <span class="brand-subtitle">Solicita la instalacion y prepara la atencion de tu vehiculo</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
@@ -32,7 +32,7 @@
     <section class="section-hero hero-accent">
         <span class="eyebrow">Servicio tecnico</span>
         <h1 class="form-title mt-3">Instalaciones vehiculares</h1>
-        <p class="form-subtitle">Selecciona la instalacion necesaria y completa el registro del cliente.</p>
+        <p class="form-subtitle">Selecciona la instalacion necesaria y registra la solicitud de atencion.</p>
     </section>
 
     <section class="form-card content-panel">
@@ -87,7 +87,7 @@
             </div>
 
             <div class="stack-actions">
-                <button type="submit" class="app-button app-button-warning">Confirmar pedido</button>
+                <button type="submit" class="app-button app-button-warning">Registrar solicitud</button>
                 <a href="inicio" class="app-button app-button-secondary">Cancelar</a>
             </div>
 

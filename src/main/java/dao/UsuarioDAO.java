@@ -37,8 +37,13 @@ public class UsuarioDAO {
     }
 
     public List<Usuario> listarAdministradores() {
+        return listarUsuariosInternos();
+    }
+
+    public List<Usuario> listarUsuariosInternos() {
         List<Usuario> usuarios = new ArrayList<>();
-        String sql = "SELECT idUsuario, username, passwordHash, rol, activo FROM usuarios WHERE rol = 'ADMIN' ORDER BY username";
+        String sql = "SELECT idUsuario, username, passwordHash, rol, activo FROM usuarios " +
+                "WHERE rol IN ('ADMIN', 'TECNICO') ORDER BY rol, username";
         try (
                 Connection conn = ConexionDB.getConexion();
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -49,6 +54,24 @@ public class UsuarioDAO {
             }
         } catch (Exception e) {
             System.out.println("Error al listar administradores: " + e.getMessage());
+        }
+        return usuarios;
+    }
+
+    public List<Usuario> listarTecnicosActivos() {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT idUsuario, username, passwordHash, rol, activo FROM usuarios " +
+                "WHERE rol = 'TECNICO' AND activo = 1 ORDER BY username";
+        try (
+                Connection conn = ConexionDB.getConexion();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()
+        ) {
+            while (rs.next()) {
+                usuarios.add(mapearUsuario(rs));
+            }
+        } catch (Exception e) {
+            System.out.println("Error al listar tecnicos activos: " + e.getMessage());
         }
         return usuarios;
     }
@@ -70,16 +93,21 @@ public class UsuarioDAO {
     }
 
     public boolean crearAdministrador(String username, String passwordHash) {
-        String sql = "INSERT INTO usuarios (username, passwordHash, rol, activo) VALUES (?, ?, 'ADMIN', 1)";
+        return crearUsuario(username, passwordHash, "ADMIN");
+    }
+
+    public boolean crearUsuario(String username, String passwordHash, String rol) {
+        String sql = "INSERT INTO usuarios (username, passwordHash, rol, activo) VALUES (?, ?, ?, 1)";
         try (
                 Connection conn = ConexionDB.getConexion();
                 PreparedStatement ps = conn.prepareStatement(sql)
         ) {
             ps.setString(1, username);
             ps.setString(2, passwordHash);
+            ps.setString(3, rol);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
-            System.out.println("Error al crear administrador: " + e.getMessage());
+            System.out.println("Error al crear usuario interno: " + e.getMessage());
         }
         return false;
     }

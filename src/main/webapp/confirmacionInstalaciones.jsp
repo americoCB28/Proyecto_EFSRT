@@ -19,8 +19,8 @@
 <nav class="app-topbar">
     <div class="app-topbar-inner">
         <div class="brand-stack">
-            <span class="brand-title">Pedido confirmado</span>
-            <span class="brand-subtitle">La solicitud de instalacion ya fue registrada</span>
+            <span class="brand-title">Solicitud confirmada</span>
+            <span class="brand-subtitle">La atencion de instalacion ya fue registrada</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
@@ -41,7 +41,7 @@
         <p class="section-text mb-4"><strong><%= areaConfirmacion %></strong></p>
         <div class="stack-actions justify-content-center">
             <a href="inicio" class="app-button app-button-warning">Volver al inicio</a>
-            <a href="<%= rutaNuevoPedido %>" class="app-button app-button-outline">Registrar otro pedido</a>
+            <a href="<%= rutaNuevoPedido %>" class="app-button app-button-outline">Registrar otra solicitud</a>
         </div>
     </section>
 </main>

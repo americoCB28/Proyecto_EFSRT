@@ -38,7 +38,7 @@ public class UsuarioAdminController extends HttpServlet {
         String accion = request.getParameter("accion");
 
         if ("crear".equals(accion)) {
-            crearAdministrador(request, response);
+            crearUsuarioInterno(request, response);
             return;
         }
 
@@ -50,12 +50,14 @@ public class UsuarioAdminController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/usuarios");
     }
 
-    private void crearAdministrador(HttpServletRequest request, HttpServletResponse response)
+    private void crearUsuarioInterno(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         String username = InputValidator.normalizarUsername(request.getParameter("username"));
         String password = request.getParameter("password");
+        String rol = InputValidator.normalizarRolInterno(request.getParameter("rol"));
 
         request.setAttribute("nuevoUsername", username == null ? "" : username);
+        request.setAttribute("nuevoRol", rol);
 
         if (!InputValidator.esUsernameValido(username)) {
             request.setAttribute("flashError", "El username es obligatorio y solo permite letras, numeros, punto, guion y guion bajo.");
@@ -64,7 +66,7 @@ public class UsuarioAdminController extends HttpServlet {
             return;
         }
 
-        if (!InputValidator.esPasswordAdminValida(password)) {
+        if (!InputValidator.esPasswordAdminValida(password) || !InputValidator.esRolInternoValido(rol)) {
             request.setAttribute("flashError", "La contrasena es obligatoria y debe tener minimo 8 caracteres.");
             cargarVistaUsuarios(request);
             request.getRequestDispatcher("/usuarios.jsp").forward(request, response);
@@ -78,14 +80,14 @@ public class UsuarioAdminController extends HttpServlet {
             return;
         }
 
-        boolean creado = usuarioDAO.crearAdministrador(username, PasswordUtil.hashPassword(password));
+        boolean creado = usuarioDAO.crearUsuario(username, PasswordUtil.hashPassword(password), rol);
         if (creado) {
-            SessionUtil.guardarFlashSuccess(request, "Administrador creado correctamente.");
+            SessionUtil.guardarFlashSuccess(request, ("ADMIN".equals(rol) ? "Administrador" : "Tecnico") + " creado correctamente.");
             response.sendRedirect(request.getContextPath() + "/usuarios");
             return;
         }
 
-        request.setAttribute("flashError", "No se pudo crear el administrador. Intenta nuevamente.");
+        request.setAttribute("flashError", "No se pudo crear el usuario interno. Intenta nuevamente.");
         cargarVistaUsuarios(request);
         request.getRequestDispatcher("/usuarios.jsp").forward(request, response);
     }
@@ -110,8 +112,8 @@ public class UsuarioAdminController extends HttpServlet {
         boolean activar = "1".equals(nuevoEstadoParam);
         Usuario usuarioObjetivo = usuarioDAO.buscarUsuarioPorId(idUsuario);
 
-        if (usuarioObjetivo == null || !"ADMIN".equalsIgnoreCase(usuarioObjetivo.getRol())) {
-            SessionUtil.guardarFlashWarning(request, "No se encontro el administrador solicitado.");
+        if (usuarioObjetivo == null || !InputValidator.esRolInternoValido(usuarioObjetivo.getRol())) {
+            SessionUtil.guardarFlashWarning(request, "No se encontro el usuario interno solicitado.");
             response.sendRedirect(request.getContextPath() + "/usuarios");
             return;
         }
@@ -125,18 +127,21 @@ public class UsuarioAdminController extends HttpServlet {
         boolean actualizado = usuarioDAO.actualizarEstadoUsuario(idUsuario, activar);
         if (actualizado) {
             SessionUtil.guardarFlashSuccess(request, activar
-                    ? "Administrador activado correctamente."
-                    : "Administrador desactivado correctamente.");
+                    ? "Usuario interno activado correctamente."
+                    : "Usuario interno desactivado correctamente.");
         } else {
-            SessionUtil.guardarFlashError(request, "No se pudo actualizar el estado del administrador.");
+            SessionUtil.guardarFlashError(request, "No se pudo actualizar el estado del usuario interno.");
         }
         response.sendRedirect(request.getContextPath() + "/usuarios");
     }
 
     private void cargarVistaUsuarios(HttpServletRequest request) {
-        List<Usuario> usuarios = usuarioDAO.listarAdministradores();
+        List<Usuario> usuarios = usuarioDAO.listarUsuariosInternos();
         request.setAttribute("usuarios", usuarios);
         request.setAttribute("usuarioActual", SessionUtil.obtenerUsuario(request));
+        if (request.getAttribute("nuevoRol") == null) {
+            request.setAttribute("nuevoRol", "ADMIN");
+        }
         if (request.getAttribute("flashSuccess") == null) {
             request.setAttribute("flashSuccess", SessionUtil.consumirFlashSuccess(request));
         }

@@ -44,22 +44,15 @@ public final class SessionUtil {
     }
 
     public static boolean esAdministrador(HttpServletRequest request) {
-        Usuario usuario = obtenerUsuario(request);
-        if (usuario == null) {
-            return false;
-        }
+        return tieneRol(request, "ADMIN");
+    }
 
-        Usuario usuarioActualizado = USUARIO_DAO.buscarUsuarioActivoPorId(usuario.getIdUsuario());
-        if (usuarioActualizado == null || !"ADMIN".equalsIgnoreCase(usuarioActualizado.getRol())) {
-            cerrarSesion(request);
-            return false;
-        }
+    public static boolean esTecnico(HttpServletRequest request) {
+        return tieneRol(request, "TECNICO");
+    }
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.setAttribute(AUTH_USER, usuarioActualizado);
-        }
-        return true;
+    public static boolean esAdministradorOTecnico(HttpServletRequest request) {
+        return tieneRol(request, "ADMIN", "TECNICO");
     }
 
     public static void guardarRedireccionPendiente(HttpServletRequest request, String redirect) {
@@ -114,5 +107,30 @@ public final class SessionUtil {
         Object message = session.getAttribute(key);
         session.removeAttribute(key);
         return message instanceof String ? (String) message : null;
+    }
+
+    private static boolean tieneRol(HttpServletRequest request, String... rolesPermitidos) {
+        Usuario usuario = obtenerUsuario(request);
+        if (usuario == null) {
+            return false;
+        }
+
+        Usuario usuarioActualizado = USUARIO_DAO.buscarUsuarioActivoPorId(usuario.getIdUsuario());
+        if (usuarioActualizado == null) {
+            cerrarSesion(request);
+            return false;
+        }
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.setAttribute(AUTH_USER, usuarioActualizado);
+        }
+
+        for (String rol : rolesPermitidos) {
+            if (rol.equalsIgnoreCase(usuarioActualizado.getRol())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -195,6 +195,14 @@ body.app-body {
   min-height: 72px;
 }
 
+.service-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .info-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -338,6 +346,12 @@ body.app-body {
   font-size: 0.88rem;
 }
 
+.app-field-sm {
+  min-height: 38px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
 .app-button:hover {
   transform: translateY(-1px);
 }
@@ -478,6 +492,28 @@ body.app-body {
   align-items: end;
 }
 
+.user-form-grid-wide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.catalog-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.catalog-checks,
+.catalog-state-stack {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .table-note {
   display: inline-flex;
   margin-left: 8px;
@@ -507,14 +543,43 @@ body.app-body {
   color: #bae6fd;
 }
 
+.status-confirmada {
+  background: rgba(59, 130, 246, 0.18);
+  color: #bfdbfe;
+}
+
+.status-atendida,
 .status-terminado {
   background: rgba(34, 197, 94, 0.18);
   color: #bbf7d0;
 }
 
+.status-vencida,
 .status-cancelado {
   background: rgba(239, 68, 68, 0.18);
   color: #fecaca;
+}
+
+.status-neutral {
+  background: rgba(148, 163, 184, 0.18);
+  color: #dbe4f0;
+}
+
+.table-action-stack {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.table-inline-form {
+  margin: 0;
+}
+
+.table-status-editor {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .table-title {
@@ -655,6 +720,21 @@ body.app-body {
   font-size: 1.15rem;
   font-weight: 800;
   color: var(--text);
+}
+
+.qr-panel {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+}
+
+.qr-image {
+  width: min(280px, 100%);
+  background: #ffffff;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow);
 }
 
 @media (max-width: 767px) {

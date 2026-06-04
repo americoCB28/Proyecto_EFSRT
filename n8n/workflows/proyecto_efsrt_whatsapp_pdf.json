@@ -1,0 +1,223 @@
+{
+  "name": "Proyecto EFSRT - WhatsApp PDF Citas",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "proyecto-efsrt-whatsapp",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook_entrada",
+      "name": "Webhook Entrada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        260,
+        300
+      ],
+      "webhookId": "proyecto-efsrt-whatsapp"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "auth_condition",
+              "leftValue": "={{ $json.headers.authorization || '' }}",
+              "rightValue": "=Bearer {{$env.N8N_WHATSAPP_TOKEN}}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if_token",
+      "name": "IF Token Valido",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "numero",
+              "name": "numero",
+              "value": "={{ $json.body.telefono }}",
+              "type": "string"
+            },
+            {
+              "id": "caption",
+              "name": "caption",
+              "value": "={{ 'Hola ' + $json.body.cliente + ', tu cita fue registrada. Codigo: ' + $json.body.codigo + ' | Fecha: ' + $json.body.fecha + ' | Horario: ' + $json.body.franja }}",
+              "type": "string"
+            },
+            {
+              "id": "pdfUrlInterna",
+              "name": "pdfUrlInterna",
+              "value": "={{ $json.body.pdfUrlInterna }}",
+              "type": "string"
+            },
+            {
+              "id": "codigo",
+              "name": "codigo",
+              "value": "={{ $json.body.codigo }}",
+              "type": "string"
+            },
+            {
+              "id": "cliente",
+              "name": "cliente",
+              "value": "={{ $json.body.cliente }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "preparar_envio",
+      "name": "Preparar Envio",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        780,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.EVOLUTION_API_URL + '/message/sendMedia/' + $env.EVOLUTION_INSTANCE_NAME }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"number\": $json.numero,\n  \"mediatype\": \"document\",\n  \"mimetype\": \"application/pdf\",\n  \"caption\": $json.caption,\n  \"media\": $json.pdfUrlInterna,\n  \"fileName\": \"cita_\" + $json.codigo + \".pdf\"\n}",
+        "options": {}
+      },
+      "id": "enviar_evolution",
+      "name": "Enviar PDF a Evolution",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1050,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"ok\": true,\n  \"mensaje\": \"WhatsApp con PDF enviado correctamente\",\n  \"codigo\": $json.codigo,\n  \"cliente\": $json.cliente\n}",
+        "options": {}
+      },
+      "id": "respuesta_ok",
+      "name": "Respuesta OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1310,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"ok\": false,\n  \"mensaje\": \"Token no valido\"\n}",
+        "options": {
+          "responseCode": 401
+        }
+      },
+      "id": "respuesta_401",
+      "name": "Respuesta 401",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        780,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook Entrada": {
+      "main": [
+        [
+          {
+            "node": "IF Token Valido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Token Valido": {
+      "main": [
+        [
+          {
+            "node": "Preparar Envio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respuesta 401",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Envio": {
+      "main": [
+        [
+          {
+            "node": "Enviar PDF a Evolution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar PDF a Evolution": {
+      "main": [
+        [
+          {
+            "node": "Respuesta OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1"
+}
