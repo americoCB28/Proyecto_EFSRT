@@ -24,23 +24,22 @@
     <div class="app-topbar-inner">
         <div class="brand-stack">
             <span class="brand-title">Grafica Vehicular</span>
-            <span class="brand-subtitle">Servicios, citas y seguimiento en un solo lugar</span>
+            <span class="brand-subtitle">Agenda tu cita y prepara la atencion de tu vehiculo</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
             <% if (admin) { %>
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
+            <a href="admin-citas" class="app-button app-button-info">Agenda</a>
+            <a href="servicio?tipo=reportes" class="app-button app-button-info">Atenciones</a>
             <a href="servicios-admin" class="app-button app-button-info">Servicios</a>
-            <a href="admin-citas" class="app-button app-button-info">Validar citas</a>
             <a href="usuarios" class="app-button app-button-info">Usuarios</a>
-            <a href="servicio?tipo=reportes" class="app-button app-button-outline">Reportes</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
             <% } else if (tecnico) { %>
             <a href="tecnico" class="app-button app-button-info">Panel tecnico</a>
-            <a href="admin-citas" class="app-button app-button-outline">Agenda de citas</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
             <% } else { %>
-            <a href="login" class="app-button app-button-outline">Login Admin</a>
+            <a href="login" class="app-button app-button-outline">Acceso interno</a>
             <% } %>
         </div>
     </div>
@@ -51,43 +50,56 @@
         <div class="hero-cover">
             <div class="hero-copy">
                 <span class="eyebrow">Agenda tu visita</span>
-                <h1 class="hero-title">Reserva la cita ideal para tu vehiculo</h1>
+                <h1 class="hero-title">Agenda tu cita vehicular</h1>
                 <p class="hero-text">
-                    Explora los servicios disponibles, define el trabajo que necesitas y deja listo el horario
-                    preferido para llevar tu vehiculo al taller.
+                    Elige un servicio, indica los detalles de tu vehiculo y reserva un horario preferido para llegar al taller con todo listo.
                 </p>
                 <div class="hero-actions">
                     <a href="citas" class="app-button app-button-success">Agendar cita</a>
-                    <a href="servicio?tipo=reportes" class="app-button app-button-outline">Zona admin</a>
                 </div>
+                <% if (!admin && !tecnico) { %>
+                <a href="login" class="internal-access">Acceso interno para administracion y tecnicos</a>
+                <% } %>
             </div>
         </div>
 
         <div class="section-block">
             <h2 class="section-title">Servicios disponibles</h2>
-            <p class="section-text">Elige el servicio y comienza un flujo de cita pensado para preparar la atencion de tu vehiculo.</p>
+            <p class="section-text">Selecciona una categoria para iniciar tu reserva. El precio final puede ajustarse luego de revisar el vehiculo.</p>
 
             <% if (servicio != null) { %>
             <div class="service-grid mt-4">
                 <article class="service-card">
                     <div class="service-kicker">Servicio 01</div>
                     <h3 class="service-title">Logotipos</h3>
-                    <p class="service-description">Diseno y aplicacion de logotipos vehiculares con cita previa para una atencion mas ordenada.</p>
-                    <a href="citas?paso=detalle&servicio=logotipo" class="app-button app-button-success">Agendar logotipo</a>
+                    <p class="service-description">Diseno y aplicacion de piezas graficas vehiculares con cita previa.</p>
+                    <div class="service-benefits">
+                        <span><strong>Incluye:</strong> placas, tapasol, forrados y detalles visuales.</span>
+                        <span><strong>Conviene si:</strong> necesitas personalizar o renovar acabados.</span>
+                    </div>
+                    <a href="citas" class="app-button app-button-success">Ver opciones de logotipo</a>
                 </article>
 
                 <article class="service-card">
                     <div class="service-kicker">Servicio 02</div>
                     <h3 class="service-title">Polarizados</h3>
-                    <p class="service-description">Selecciona material y porcentaje de luz visible para coordinar mejor la instalacion.</p>
-                    <a href="citas?paso=detalle&servicio=polarizado" class="app-button app-button-info">Agendar polarizado</a>
+                    <p class="service-description">Laminas para controlar privacidad, visibilidad y calor dentro del vehiculo.</p>
+                    <div class="service-benefits">
+                        <span><strong>Incluye:</strong> seleccion de material y porcentaje de luz.</span>
+                        <span><strong>Conviene si:</strong> buscas confort, privacidad o proteccion solar.</span>
+                    </div>
+                    <a href="citas" class="app-button app-button-info">Ver opciones de polarizado</a>
                 </article>
 
                 <article class="service-card">
                     <div class="service-kicker">Servicio 03</div>
                     <h3 class="service-title">Instalaciones</h3>
-                    <p class="service-description">Programa accesorios e instalaciones automotrices con horario preferido de atencion.</p>
-                    <a href="citas?paso=detalle&servicio=instalacion" class="app-button app-button-warning">Agendar instalacion</a>
+                    <p class="service-description">Instalacion tecnica de accesorios, tapizados, radio, GPS y acabados interiores.</p>
+                    <div class="service-benefits">
+                        <span><strong>Incluye:</strong> revision del accesorio o trabajo solicitado.</span>
+                        <span><strong>Conviene si:</strong> necesitas preparar una instalacion presencial.</span>
+                    </div>
+                    <a href="citas" class="app-button app-button-warning">Ver opciones de instalacion</a>
                 </article>
             </div>
             <% } %>
@@ -95,15 +107,15 @@
             <div class="info-strip">
                 <div class="info-item">
                     <strong>Flujo cliente</strong>
-                    <div class="muted-text mt-2">Inicio, eleccion del servicio, detalle tecnico y horario preferido para la cita.</div>
+                    <div class="muted-text mt-2">Elige servicio, define detalles, selecciona horario y recibe tu constancia.</div>
                 </div>
                 <div class="info-item">
-                    <strong>Flujo administrador</strong>
-                    <div class="muted-text mt-2">Login, reportes, actualizacion y cierre de sesion visibles desde la cabecera.</div>
+                    <strong>Al llegar al taller</strong>
+                    <div class="muted-text mt-2">Presenta tu codigo o QR para validar rapidamente tu cita.</div>
                 </div>
                 <div class="info-item">
-                    <strong>Compatibilidad</strong>
-                    <div class="muted-text mt-2">La aplicacion sigue siendo ligera y compatible con Maven, Docker y Tomcat 11.</div>
+                    <strong>Precio estimado</strong>
+                    <div class="muted-text mt-2">El monto se confirma luego de revisar el vehiculo y el alcance real.</div>
                 </div>
             </div>
 

@@ -327,22 +327,54 @@ public class PedidoController extends HttpServlet {
         String filtroServicio = normalizarFiltroServicio(request.getParameter("servicioFiltro"));
         String filtroEstado = InputValidator.normalizarEstadoFiltro(request.getParameter("estadoFiltro"));
 
+        List<Pedido> pedidos = mostrarPolarizado(filtroServicio)
+                ? pedidoDAO.listarPedidosPolarizadoFiltrados(filtroCliente, filtroEstadoParaConsulta(filtroEstado))
+                : Collections.emptyList();
+        List<PedidoLogotipo> pedidosLogotipo = mostrarLogotipo(filtroServicio)
+                ? pedidoDAO.listarPedidosLogotipoFiltrados(filtroCliente, filtroEstadoParaConsulta(filtroEstado))
+                : Collections.emptyList();
+        List<PedidoInstalacion> pedidosInstalacion = mostrarInstalacion(filtroServicio)
+                ? pedidoDAO.listarPedidosInstalacionFiltrados(filtroCliente, filtroEstadoParaConsulta(filtroEstado))
+                : Collections.emptyList();
+
+        int totalAtenciones = pedidos.size() + pedidosLogotipo.size() + pedidosInstalacion.size();
+
         request.setAttribute("clienteFiltro", filtroCliente == null ? "" : filtroCliente);
         request.setAttribute("servicioFiltro", filtroServicio);
         request.setAttribute("estadoFiltro", filtroEstado);
         request.setAttribute("clientes", clienteDAO.listarClientesPorNombre(filtroCliente));
-        request.setAttribute("pedidos", mostrarPolarizado(filtroServicio)
-                ? pedidoDAO.listarPedidosPolarizadoFiltrados(filtroCliente, filtroEstadoParaConsulta(filtroEstado))
-                : Collections.emptyList());
-        request.setAttribute("pedidosLogotipo", mostrarLogotipo(filtroServicio)
-                ? pedidoDAO.listarPedidosLogotipoFiltrados(filtroCliente, filtroEstadoParaConsulta(filtroEstado))
-                : Collections.emptyList());
-        request.setAttribute("pedidosInstalacion", mostrarInstalacion(filtroServicio)
-                ? pedidoDAO.listarPedidosInstalacionFiltrados(filtroCliente, filtroEstadoParaConsulta(filtroEstado))
-                : Collections.emptyList());
+        request.setAttribute("pedidos", pedidos);
+        request.setAttribute("pedidosLogotipo", pedidosLogotipo);
+        request.setAttribute("pedidosInstalacion", pedidosInstalacion);
+        request.setAttribute("totalAtenciones", totalAtenciones);
+        request.setAttribute("totalPendientes", contarAtencionesPorEstado(pedidos, pedidosLogotipo, pedidosInstalacion, "pendiente"));
+        request.setAttribute("totalEnProceso", contarAtencionesPorEstado(pedidos, pedidosLogotipo, pedidosInstalacion, "en_proceso"));
+        request.setAttribute("totalTerminadas", contarAtencionesPorEstado(pedidos, pedidosLogotipo, pedidosInstalacion, "terminado"));
+        request.setAttribute("totalCanceladas", contarAtencionesPorEstado(pedidos, pedidosLogotipo, pedidosInstalacion, "cancelado"));
         request.setAttribute("flashSuccess", SessionUtil.consumirFlashSuccess(request));
         request.setAttribute("flashWarning", SessionUtil.consumirFlashWarning(request));
         request.setAttribute("flashError", SessionUtil.consumirFlashError(request));
+    }
+
+    private int contarAtencionesPorEstado(List<Pedido> pedidos, List<PedidoLogotipo> pedidosLogotipo,
+                                          List<PedidoInstalacion> pedidosInstalacion, String estado) {
+        int total = 0;
+        for (Pedido pedido : pedidos) {
+            if (estado.equals(pedido.getEstado())) {
+                total++;
+            }
+        }
+        for (PedidoLogotipo pedido : pedidosLogotipo) {
+            if (estado.equals(pedido.getEstado())) {
+                total++;
+            }
+        }
+        for (PedidoInstalacion pedido : pedidosInstalacion) {
+            if (estado.equals(pedido.getEstado())) {
+                total++;
+            }
+        }
+        return total;
     }
 
     private void cargarDashboard(HttpServletRequest request) {

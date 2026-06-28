@@ -29,10 +29,18 @@
 </nav>
 
 <main class="confirm-shell">
+    <div class="step-progress" aria-label="Progreso de reserva">
+        <div class="step-item"><span class="step-number">Paso 1</span><span class="step-label">Servicio</span></div>
+        <div class="step-item"><span class="step-number">Paso 2</span><span class="step-label">Detalles</span></div>
+        <div class="step-item"><span class="step-number">Paso 3</span><span class="step-label">Horario</span></div>
+        <div class="step-item"><span class="step-number">Paso 4</span><span class="step-label">Datos</span></div>
+        <div class="step-item step-item-active"><span class="step-number">Paso 5</span><span class="step-label">Confirmacion</span></div>
+    </div>
+
     <section class="confirm-card content-panel">
         <div class="confirm-badge">Cita registrada</div>
         <h1 class="confirm-title">Tu cita fue guardada correctamente</h1>
-        <p class="confirm-text">Conserva este codigo de verificacion y el QR. La administracion podra validar tu llegada escaneandolo directamente.</p>
+        <p class="confirm-text">Conserva este codigo de verificacion y el QR. El equipo del taller podra validar tu llegada escaneandolo directamente.</p>
 
         <div class="flash-wrap text-start">
             <% if (flashSuccess != null && !flashSuccess.isBlank()) { %>
@@ -82,13 +90,19 @@
             <p class="page-footer-note">Si la administracion escanea este QR, abrira la validacion protegida de la cita.</p>
         </div>
 
+        <div class="arrival-instructions">
+            <p><strong>Llega 10 minutos antes</strong> para validar tus datos sin retrasar la atencion.</p>
+            <p><strong>Presenta el QR o codigo</strong> al personal del taller.</p>
+            <p><strong>Recuerda:</strong> el precio puede ajustarse tras revisar el vehiculo.</p>
+        </div>
+
         <div class="stack-actions justify-content-center">
             <a href="cita-pdf?token=<%= citaConfirmada.getTokenVerificacion() %>" class="app-button app-button-info">Descargar PDF</a>
             <% if (citaConfirmada.getWhatsappUrl() != null && !citaConfirmada.getWhatsappUrl().isBlank()) { %>
             <a href="<%= citaConfirmada.getWhatsappUrl() %>" target="_blank" rel="noopener noreferrer" class="app-button app-button-success">Abrir WhatsApp</a>
             <% } %>
-            <a href="citas" class="app-button app-button-primary">Agendar otra cita</a>
-            <a href="inicio" class="app-button app-button-secondary">Finalizar</a>
+            <a href="inicio" class="app-button app-button-primary">Finalizar</a>
+            <a href="citas" class="app-button app-button-secondary">Agendar otra cita</a>
         </div>
     </section>
 </main>

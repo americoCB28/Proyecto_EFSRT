@@ -33,7 +33,6 @@
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
-            <a href="admin-citas" class="app-button app-button-info">Agenda de citas</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
         </div>
     </div>
@@ -95,6 +94,7 @@
         <div class="table-title">
             <h3>Filtros tecnicos</h3>
         </div>
+        <div class="form-helper-card mb-3">Usa estos filtros para concentrarte en la agenda del dia o en citas que todavia requieren accion.</div>
         <form action="tecnico" method="get" class="filter-grid">
             <div>
                 <label for="fechaCita" class="form-label">Fecha</label>
@@ -124,6 +124,7 @@
             <h3>Detalle de la cita</h3>
             <a href="cita-pdf?token=<%= citaDetalle.getTokenVerificacion() %>" class="app-button app-button-secondary app-button-sm">Descargar PDF</a>
         </div>
+        <div class="form-helper-card mb-3">Primero revisa servicio, horario, contacto y observaciones. Luego actualiza solo el estado operativo necesario.</div>
         <div class="detail-grid">
             <article class="detail-card">
                 <div class="detail-label">Codigo</div>
@@ -219,7 +220,13 @@
                 <% }
                 } else { %>
                 <tr>
-                    <td colspan="9">No hay citas para los filtros actuales.</td>
+                    <td colspan="9">
+                        <div class="empty-state">
+                            <h4>No hay citas para los filtros actuales</h4>
+                            <p>Cambia la fecha o selecciona todos los estados para revisar mas trabajo asignado.</p>
+                            <a href="tecnico" class="app-button app-button-primary">Volver a hoy</a>
+                        </div>
+                    </td>
                 </tr>
                 <% } %>
                 </tbody>

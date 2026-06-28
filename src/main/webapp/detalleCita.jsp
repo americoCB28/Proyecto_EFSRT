@@ -30,8 +30,16 @@
 </nav>
 
 <main class="form-shell">
+    <div class="step-progress" aria-label="Progreso de reserva">
+        <div class="step-item"><span class="step-number">Paso 1</span><span class="step-label">Servicio</span></div>
+        <div class="step-item step-item-active"><span class="step-number">Paso 2</span><span class="step-label">Detalles</span></div>
+        <div class="step-item"><span class="step-number">Paso 3</span><span class="step-label">Horario</span></div>
+        <div class="step-item"><span class="step-number">Paso 4</span><span class="step-label">Datos</span></div>
+        <div class="step-item"><span class="step-number">Paso 5</span><span class="step-label">Confirmacion</span></div>
+    </div>
+
     <section class="section-hero">
-        <span class="eyebrow">Paso 2 de 3</span>
+        <span class="eyebrow">Paso 2 de 5</span>
         <h1 class="form-title mt-3">Define los detalles del servicio</h1>
         <p class="form-subtitle">
             Este paso nos ayuda a preparar mejor la atencion cuando lleves tu vehiculo al local.
@@ -54,6 +62,7 @@
             <% if ("polarizado".equals(servicio)) { %>
             <div class="mb-4">
                 <label class="form-label">Tipo de material</label>
+                <div class="choice-help">El material define el rendimiento del polarizado. Si buscas menos calor, elige NanoCeramico; si buscas una opcion premium con mejor claridad, elige Crystalline.</div>
                 <div class="choice-grid">
                     <div>
                         <input type="radio" class="btn-check" name="material" id="nanoCarbono" value="nanoCarbono"
@@ -84,6 +93,7 @@
 
             <div class="mb-4">
                 <label class="form-label">Porcentaje de luz visible</label>
+                <div class="choice-help">Mientras menor sea el porcentaje, mas oscuro sera el acabado. Elige una opcion que combine privacidad y visibilidad para tu uso diario.</div>
                 <div class="choice-grid">
                     <div>
                         <input type="radio" class="btn-check" name="luzVisible" id="luz5" value="5%"
@@ -122,6 +132,7 @@
             <% } else if ("logotipo".equals(servicio)) { %>
             <div class="mb-4">
                 <label class="form-label">Tipo de trabajo</label>
+                <div class="choice-help">Selecciona el trabajo grafico principal. El equipo confirmara medidas, acabado y ubicacion cuando revisen el vehiculo.</div>
                 <div class="choice-grid">
                     <%
                         String[] opciones = {"Placa Provisional", "Tapasol", "Forrado de faros", "Forrado de techo", "Forrado de pisaderas", "Manijas"};
@@ -142,6 +153,7 @@
             <% } else { %>
             <div class="mb-4">
                 <label class="form-label">Tipo de instalacion</label>
+                <div class="choice-help">Elige la instalacion que necesitas. Si el alcance cambia al revisar el vehiculo, el taller podra ajustar el precio estimado.</div>
                 <div class="choice-grid">
                     <%
                         String[] opciones = {"Tapizado de Techo", "Tapizado de Piso", "Confeccion de Fundas", "Instalacion de Radio", "Instalacion de GPS"};

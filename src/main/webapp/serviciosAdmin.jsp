@@ -27,6 +27,7 @@
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
+            <a href="admin-citas" class="app-button app-button-info">Agenda</a>
             <a href="servicio?tipo=reportes" class="app-button app-button-info">Atenciones</a>
             <a href="usuarios" class="app-button app-button-info">Usuarios</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
@@ -174,7 +175,12 @@
                 <% }
                 } else { %>
                 <tr>
-                    <td colspan="9">Todavia no hay servicios en el catalogo.</td>
+                    <td colspan="9">
+                        <div class="empty-state">
+                            <h4>Todavia no hay servicios en el catalogo</h4>
+                            <p>Crea el primer servicio para que aparezca en el flujo publico de citas.</p>
+                        </div>
+                    </td>
                 </tr>
                 <% } %>
                 </tbody>
