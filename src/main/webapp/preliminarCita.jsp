@@ -27,8 +27,16 @@
 </nav>
 
 <main class="form-shell">
+    <div class="step-progress" aria-label="Progreso de reserva">
+        <div class="step-item"><span class="step-number">Paso 1</span><span class="step-label">Servicio</span></div>
+        <div class="step-item"><span class="step-number">Paso 2</span><span class="step-label">Detalles</span></div>
+        <div class="step-item"><span class="step-number">Paso 3</span><span class="step-label">Horario</span></div>
+        <div class="step-item step-item-active"><span class="step-number">Paso 4</span><span class="step-label">Datos</span></div>
+        <div class="step-item"><span class="step-number">Paso 5</span><span class="step-label">Confirmacion</span></div>
+    </div>
+
     <section class="section-hero">
-        <span class="eyebrow">Etapa 3 completada</span>
+        <span class="eyebrow">Paso 4 de 5</span>
         <h1 class="form-title mt-3">Precio estimado y datos del cliente</h1>
         <p class="form-subtitle">Revisa el servicio elegido, el horario preferido y deja tus datos para confirmar la cita.</p>
     </section>
@@ -38,7 +46,9 @@
         <div class="app-alert alert alert-danger" role="alert"><%= error %></div>
         <% } %>
 
-        <div class="detail-grid">
+        <div class="summary-section">
+            <h3 class="summary-section-title">Datos del servicio</h3>
+            <div class="detail-grid">
             <article class="detail-card">
                 <div class="detail-label">Servicio</div>
                 <div class="detail-value"><%= citaDraft.getNombreCatalogoServicio() == null || citaDraft.getNombreCatalogoServicio().isBlank() ? citaDraft.getTipoServicio() : citaDraft.getNombreCatalogoServicio() %></div>
@@ -48,6 +58,16 @@
                 <div class="detail-value"><%= citaDraft.getDetalleServicio() %></div>
             </article>
             <article class="detail-card">
+                <div class="detail-label">Precio estimado</div>
+                <div class="detail-value">S/ <%= String.format(java.util.Locale.US, "%.2f", citaDraft.getPrecioEstimado()) %></div>
+            </article>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h3 class="summary-section-title">Datos de la cita</h3>
+            <div class="detail-grid">
+            <article class="detail-card">
                 <div class="detail-label">Fecha</div>
                 <div class="detail-value"><%= citaDraft.getFechaCita() %></div>
             </article>
@@ -56,17 +76,18 @@
                 <div class="detail-value"><%= citaDraft.getFranjaHoraria() %></div>
             </article>
             <article class="detail-card">
-                <div class="detail-label">Precio estimado</div>
-                <div class="detail-value">S/ <%= String.format(java.util.Locale.US, "%.2f", citaDraft.getPrecioEstimado()) %></div>
-            </article>
-            <article class="detail-card">
                 <div class="detail-label">Estado inicial</div>
                 <div class="detail-value"><%= citaDraft.getEstadoCita() %></div>
             </article>
+            </div>
         </div>
 
         <form action="citas" method="post">
             <input type="hidden" name="accion" value="confirmar">
+
+            <div class="summary-section">
+                <h3 class="summary-section-title">Datos del cliente</h3>
+            </div>
 
             <div class="mb-4">
                 <label for="nombreCliente" class="form-label">Nombre completo</label>
@@ -106,12 +127,15 @@
                 <div class="page-footer-note">WhatsApp automatico se envia mediante n8n y Evolution si el entorno ya esta configurado.</div>
             </div>
 
+            <div class="form-helper-card mb-4">
+                El precio mostrado es referencial. El equipo confirmara el monto final luego de revisar el vehiculo y el alcance del trabajo.
+            </div>
+
             <div class="stack-actions">
                 <button type="submit" class="app-button app-button-primary">Confirmar y guardar cita</button>
                 <a href="citas?paso=horario" class="app-button app-button-secondary">Volver</a>
             </div>
 
-            <div class="page-footer-note">El precio mostrado es estimado y puede ajustarse luego de la revision final del vehiculo.</div>
         </form>
     </section>
 </main>

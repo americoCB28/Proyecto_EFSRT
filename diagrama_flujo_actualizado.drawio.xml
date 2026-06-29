@@ -1,0 +1,196 @@
+<mxGraphModel dx="2200" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <mxCell id="titulo" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=24;fontStyle=1" value="Diagrama de Flujo General&#xa;Proyecto EFSRT - Estado Actual" vertex="1">
+      <mxGeometry x="520" y="20" width="760" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="inicio" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=14;fontStyle=1" value="Inicio" vertex="1">
+      <mxGeometry x="850" y="100" width="160" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="tipo" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=13;fontStyle=1" value="Que tipo de usuario&#xa;o flujo accede?" vertex="1">
+      <mxGeometry x="820" y="190" width="220" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="pub_trad" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=13" value="Cliente entra a /inicio&#xa;y usa flujo tradicional" vertex="1">
+      <mxGeometry x="120" y="220" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_trad_servicio" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=13" value="Selecciona servicio tradicional&#xa;logotipo / polarizado / instalacion" vertex="1">
+      <mxGeometry x="120" y="330" width="250" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_trad_form" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=13" value="Completa formulario&#xa;de atencion tradicional" vertex="1">
+      <mxGeometry x="120" y="450" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_trad_valida" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=13;fontStyle=1" value="Datos validos?" vertex="1">
+      <mxGeometry x="155" y="560" width="180" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_trad_error" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=13" value="Mostrar error&#xa;y volver al formulario" vertex="1">
+      <mxGeometry x="20" y="580" width="150" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_trad_save" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=13" value="Guardar cliente y&#xa;atencion tradicional" vertex="1">
+      <mxGeometry x="120" y="720" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_trad_ok" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=13" value="Mostrar confirmacion&#xa;tradicional" vertex="1">
+      <mxGeometry x="120" y="840" width="250" height="70" as="geometry" />
+    </mxCell>
+
+    <mxCell id="pub_cita" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;fontSize=13" value="Cliente entra a /citas" vertex="1">
+      <mxGeometry x="520" y="220" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_catalogo" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;fontSize=13" value="Selecciona servicio desde&#xa;catalogo activo" vertex="1">
+      <mxGeometry x="520" y="330" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_detalle" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;fontSize=13" value="Completa detalle&#xa;del servicio" vertex="1">
+      <mxGeometry x="520" y="440" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_horario" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;fontSize=13" value="Elige fecha y&#xa;franja horaria" vertex="1">
+      <mxGeometry x="520" y="550" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_resumen" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;fontSize=13" value="Ver precio estimado&#xa;y resumen" vertex="1">
+      <mxGeometry x="520" y="660" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_datos" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;fontSize=13" value="Ingresar nombre, correo,&#xa;telefono y canal" vertex="1">
+      <mxGeometry x="520" y="770" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_cita_valida" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=13;fontStyle=1" value="Datos de cita validos?" vertex="1">
+      <mxGeometry x="560" y="880" width="170" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_cita_error" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=13" value="Mostrar error y&#xa;volver al resumen" vertex="1">
+      <mxGeometry x="400" y="900" width="150" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_cita_guardar" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=13" value="Guardar cita en MySQL&#xa;y generar codigo" vertex="1">
+      <mxGeometry x="520" y="1040" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_qr_pdf" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=13" value="Generar QR, PDF y&#xa;preparar entregas" vertex="1">
+      <mxGeometry x="520" y="1160" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="pub_cita_ok" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=13" value="Mostrar confirmacion&#xa;de cita" vertex="1">
+      <mxGeometry x="520" y="1280" width="250" height="70" as="geometry" />
+    </mxCell>
+
+    <mxCell id="admin_login" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#EF6C00;fontSize=13" value="Usuario interno entra&#xa;a /login" vertex="1">
+      <mxGeometry x="1120" y="220" width="250" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_cred" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#EF6C00;fontSize=13" value="Ingresa credenciales" vertex="1">
+      <mxGeometry x="1120" y="330" width="250" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_valida" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=13;fontStyle=1" value="Credenciales validas&#xa;y usuario activo?" vertex="1">
+      <mxGeometry x="1160" y="430" width="170" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_error" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=13" value="Mostrar error&#xa;y volver a login" vertex="1">
+      <mxGeometry x="1380" y="450" width="150" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_rol" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=13;fontStyle=1" value="Rol del usuario?" vertex="1">
+      <mxGeometry x="1160" y="590" width="170" height="100" as="geometry" />
+    </mxCell>
+
+    <mxCell id="admin_dashboard" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=13" value="Admin entra a dashboard&#xa;administrativo" vertex="1">
+      <mxGeometry x="1080" y="760" width="260" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_accion" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=13;fontStyle=1" value="Accion admin?" vertex="1">
+      <mxGeometry x="1110" y="870" width="200" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_reportes" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=13" value="Consultar reportes&#xa;y exportar CSV" vertex="1">
+      <mxGeometry x="900" y="1030" width="220" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_actualizar" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=13" value="Actualizar atenciones&#xa;tradicionales" vertex="1">
+      <mxGeometry x="1160" y="1030" width="220" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_historial" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=13" value="Ver historial&#xa;por cliente" vertex="1">
+      <mxGeometry x="1420" y="1030" width="220" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_usuarios" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=13" value="Gestionar usuarios&#xa;internos" vertex="1">
+      <mxGeometry x="900" y="1145" width="220" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_servicios" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=13" value="Gestionar catalogo&#xa;de servicios" vertex="1">
+      <mxGeometry x="1160" y="1145" width="220" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_agenda" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=13" value="Gestionar agenda&#xa;de citas" vertex="1">
+      <mxGeometry x="1420" y="1145" width="220" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="admin_csrf" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=13" value="Validar sesion activa&#xa;y CSRF en POST admin" vertex="1">
+      <mxGeometry x="1080" y="1270" width="260" height="70" as="geometry" />
+    </mxCell>
+
+    <mxCell id="tecnico_panel" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=13" value="Tecnico entra al&#xa;panel /tecnico" vertex="1">
+      <mxGeometry x="1460" y="720" width="220" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="tecnico_filtro" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=13" value="Filtra citas asignadas&#xa;por fecha y estado" vertex="1">
+      <mxGeometry x="1460" y="820" width="220" height="70" as="geometry" />
+    </mxCell>
+    <mxCell id="tecnico_detalle" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=13" value="Abre detalle de cita" vertex="1">
+      <mxGeometry x="1460" y="920" width="220" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="tecnico_estado" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3949AB;fontSize=13" value="Actualiza estado&#xa;tecnico" vertex="1">
+      <mxGeometry x="1460" y="1010" width="220" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="tecnico_csrf" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;fontSize=13" value="Validar sesion activa&#xa;y CSRF tecnico" vertex="1">
+      <mxGeometry x="1460" y="1100" width="220" height="70" as="geometry" />
+    </mxCell>
+
+    <mxCell id="fin" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#455A64;fontSize=14;fontStyle=1" value="Fin" vertex="1">
+      <mxGeometry x="840" y="1365" width="180" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="a1" edge="1" parent="1" source="inicio" target="tipo" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="a2" edge="1" parent="1" source="tipo" target="pub_trad" value="Publico tradicional" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a3" edge="1" parent="1" source="tipo" target="pub_cita" value="Publico citas" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a4" edge="1" parent="1" source="tipo" target="admin_login" value="Interno" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="p1" edge="1" parent="1" source="pub_trad" target="pub_trad_servicio" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="p2" edge="1" parent="1" source="pub_trad_servicio" target="pub_trad_form" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="p3" edge="1" parent="1" source="pub_trad_form" target="pub_trad_valida" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="p4" edge="1" parent="1" source="pub_trad_valida" target="pub_trad_error" value="No" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="p5" edge="1" parent="1" source="pub_trad_error" target="pub_trad_form" value="Corregir" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;dashed=1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="p6" edge="1" parent="1" source="pub_trad_valida" target="pub_trad_save" value="Si" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="p7" edge="1" parent="1" source="pub_trad_save" target="pub_trad_ok" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="p8" edge="1" parent="1" source="pub_trad_ok" target="fin" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="c1" edge="1" parent="1" source="pub_cita" target="pub_catalogo" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c2" edge="1" parent="1" source="pub_catalogo" target="pub_detalle" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c3" edge="1" parent="1" source="pub_detalle" target="pub_horario" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c4" edge="1" parent="1" source="pub_horario" target="pub_resumen" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c5" edge="1" parent="1" source="pub_resumen" target="pub_datos" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c6" edge="1" parent="1" source="pub_datos" target="pub_cita_valida" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c7" edge="1" parent="1" source="pub_cita_valida" target="pub_cita_error" value="No" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c8" edge="1" parent="1" source="pub_cita_error" target="pub_resumen" value="Corregir" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;dashed=1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c9" edge="1" parent="1" source="pub_cita_valida" target="pub_cita_guardar" value="Si" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c10" edge="1" parent="1" source="pub_cita_guardar" target="pub_qr_pdf" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c11" edge="1" parent="1" source="pub_qr_pdf" target="pub_cita_ok" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="c12" edge="1" parent="1" source="pub_cita_ok" target="fin" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="i1" edge="1" parent="1" source="admin_login" target="admin_cred" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="i2" edge="1" parent="1" source="admin_cred" target="admin_valida" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="i3" edge="1" parent="1" source="admin_valida" target="admin_error" value="No" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="i4" edge="1" parent="1" source="admin_error" target="admin_login" value="Reintentar" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;dashed=1"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="i5" edge="1" parent="1" source="admin_valida" target="admin_rol" value="Si" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="i6" edge="1" parent="1" source="admin_rol" target="admin_dashboard" value="ADMIN" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="i7" edge="1" parent="1" source="admin_rol" target="tecnico_panel" value="TECNICO" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="a5" edge="1" parent="1" source="admin_dashboard" target="admin_accion" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a6" edge="1" parent="1" source="admin_accion" target="admin_reportes" value="Reportes" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a7" edge="1" parent="1" source="admin_accion" target="admin_actualizar" value="Actualizar" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a8" edge="1" parent="1" source="admin_accion" target="admin_historial" value="Historial" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a9" edge="1" parent="1" source="admin_accion" target="admin_usuarios" value="Usuarios" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a10" edge="1" parent="1" source="admin_accion" target="admin_servicios" value="Servicios" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a11" edge="1" parent="1" source="admin_accion" target="admin_agenda" value="Agenda" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="a12" edge="1" parent="1" source="admin_actualizar" target="admin_csrf" value="POST" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a13" edge="1" parent="1" source="admin_usuarios" target="admin_csrf" value="POST" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a14" edge="1" parent="1" source="admin_servicios" target="admin_csrf" value="POST" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a15" edge="1" parent="1" source="admin_agenda" target="admin_csrf" value="POST" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a16" edge="1" parent="1" source="admin_reportes" target="fin" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a17" edge="1" parent="1" source="admin_historial" target="fin" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="a18" edge="1" parent="1" source="admin_csrf" target="fin" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <mxCell id="t1" edge="1" parent="1" source="tecnico_panel" target="tecnico_filtro" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="t2" edge="1" parent="1" source="tecnico_filtro" target="tecnico_detalle" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="t3" edge="1" parent="1" source="tecnico_detalle" target="tecnico_estado" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="t4" edge="1" parent="1" source="tecnico_estado" target="tecnico_csrf" value="POST" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="t5" edge="1" parent="1" source="tecnico_csrf" target="fin" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2"><mxGeometry relative="1" as="geometry" /></mxCell>
+  </root>
+</mxGraphModel>

@@ -27,10 +27,18 @@
 </nav>
 
 <main class="form-shell">
+    <div class="step-progress" aria-label="Progreso de reserva">
+        <div class="step-item"><span class="step-number">Paso 1</span><span class="step-label">Servicio</span></div>
+        <div class="step-item"><span class="step-number">Paso 2</span><span class="step-label">Detalles</span></div>
+        <div class="step-item step-item-active"><span class="step-number">Paso 3</span><span class="step-label">Horario</span></div>
+        <div class="step-item"><span class="step-number">Paso 4</span><span class="step-label">Datos</span></div>
+        <div class="step-item"><span class="step-number">Paso 5</span><span class="step-label">Confirmacion</span></div>
+    </div>
+
     <section class="section-hero">
-        <span class="eyebrow">Paso 3 de 3</span>
+        <span class="eyebrow">Paso 3 de 5</span>
         <h1 class="form-title mt-3">Elige tu horario preferido</h1>
-        <p class="form-subtitle">Aun no se registra la cita final. En esta etapa solo dejamos listos los datos base para la siguiente fase.</p>
+        <p class="form-subtitle">Selecciona una fecha y horario preferido; el taller podra confirmar o ajustar si es necesario.</p>
     </section>
 
     <section class="form-card content-panel">
@@ -51,6 +59,10 @@
 
         <form action="citas" method="post">
             <input type="hidden" name="accion" value="horario">
+
+            <div class="form-helper-card mb-4">
+                Tu cita todavia no esta registrada. Despues de elegir horario revisaras el resumen, dejaras tus datos y confirmaras la reserva.
+            </div>
 
             <div class="mb-4">
                 <label for="fechaCita" class="form-label">Fecha preferida</label>

@@ -30,15 +30,15 @@
 <nav class="app-topbar">
     <div class="app-topbar-inner">
         <div class="brand-stack">
-            <span class="brand-title">Administradores</span>
-            <span class="brand-subtitle">Gestiona accesos administrativos sin alterar el login actual</span>
+            <span class="brand-title">Usuarios Internos</span>
+            <span class="brand-subtitle">Gestiona accesos de administradores y tecnicos</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
-            <a href="admin-citas" class="app-button app-button-info">Validar citas</a>
+            <a href="admin-citas" class="app-button app-button-info">Agenda</a>
+            <a href="servicio?tipo=reportes" class="app-button app-button-info">Atenciones</a>
             <a href="servicios-admin" class="app-button app-button-info">Servicios</a>
-            <a href="servicio?tipo=reportes" class="app-button app-button-info">Reportes</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
         </div>
     </div>
@@ -109,7 +109,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% if (usuarios != null) {
+                <% if (usuarios != null && !usuarios.isEmpty()) {
                     for (Usuario usuario : usuarios) {
                         boolean esActual = usuarioActual != null && usuarioActual.getIdUsuario() == usuario.getIdUsuario();
                 %>
@@ -145,7 +145,16 @@
                     </td>
                 </tr>
                 <% }
-                } %>
+                } else { %>
+                <tr>
+                    <td colspan="5">
+                        <div class="empty-state">
+                            <h4>No hay usuarios internos registrados</h4>
+                            <p>Crea un administrador o tecnico para habilitar acceso operativo al sistema.</p>
+                        </div>
+                    </td>
+                </tr>
+                <% } %>
                 </tbody>
             </table>
         </div>

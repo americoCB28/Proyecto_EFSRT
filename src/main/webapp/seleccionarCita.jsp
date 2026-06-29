@@ -19,7 +19,7 @@
     <div class="app-topbar-inner">
         <div class="brand-stack">
             <span class="brand-title">Agendamiento de Citas</span>
-            <span class="brand-subtitle">Elige el servicio que deseas realizar a tu vehiculo</span>
+            <span class="brand-subtitle">Inicia tu reserva eligiendo el servicio principal</span>
         </div>
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
@@ -32,10 +32,18 @@
 </nav>
 
 <main class="app-shell page-section">
+    <div class="step-progress" aria-label="Progreso de reserva">
+        <div class="step-item step-item-active"><span class="step-number">Paso 1</span><span class="step-label">Servicio</span></div>
+        <div class="step-item"><span class="step-number">Paso 2</span><span class="step-label">Detalles</span></div>
+        <div class="step-item"><span class="step-number">Paso 3</span><span class="step-label">Horario</span></div>
+        <div class="step-item"><span class="step-number">Paso 4</span><span class="step-label">Datos</span></div>
+        <div class="step-item"><span class="step-number">Paso 5</span><span class="step-label">Confirmacion</span></div>
+    </div>
+
     <section class="section-hero">
-        <span class="eyebrow">Paso 1 de 3</span>
+        <span class="eyebrow">Paso 1 de 5</span>
         <h1 class="form-title mt-3">Reserva tu cita de servicio</h1>
-        <p class="form-subtitle">Selecciona la categoria que mejor se ajuste a tu necesidad. En los siguientes pasos definiras el detalle y el horario preferido.</p>
+        <p class="form-subtitle">Selecciona la categoria que mejor se ajuste a tu necesidad. Despues podras indicar detalles, fecha y datos de contacto.</p>
     </section>
 
     <section class="table-card">
@@ -50,6 +58,10 @@
                 <div class="service-meta mb-3">
                     <span>Desde S/ <%= String.format(java.util.Locale.US, "%.2f", servicio.getPrecioBase()) %></span>
                     <span><%= servicio.getDuracionMinutos() %> min</span>
+                </div>
+                <div class="service-benefits">
+                    <span><strong>Incluye:</strong> preparacion del trabajo antes de tu llegada.</span>
+                    <span><strong>Conviene si:</strong> quieres separar un horario y evitar esperas.</span>
                 </div>
                 <a href="citas?paso=detalle&idCatalogoServicio=<%= servicio.getIdCatalogoServicio() %>" class="app-button app-button-primary">Elegir servicio</a>
             </article>

@@ -36,8 +36,10 @@
         <div class="topbar-actions">
             <a href="inicio" class="app-button app-button-secondary">Inicio</a>
             <a href="servicio?tipo=dashboard" class="app-button app-button-info">Dashboard</a>
-            <a href="servicios-admin" class="app-button app-button-info">Servicios</a>
+            <a href="admin-citas" class="app-button app-button-info">Agenda</a>
             <a href="servicio?tipo=reportes" class="app-button app-button-info">Atenciones</a>
+            <a href="servicios-admin" class="app-button app-button-info">Servicios</a>
+            <a href="usuarios" class="app-button app-button-info">Usuarios</a>
             <a href="logout" class="app-button app-button-outline">Cerrar sesion</a>
         </div>
     </div>
@@ -46,8 +48,8 @@
 <main class="app-shell page-section">
     <section class="section-hero">
         <span class="eyebrow">Agenda operativa</span>
-        <h1 class="form-title mt-3">Validacion y seguimiento de citas</h1>
-        <p class="form-subtitle">Esta pantalla permite revisar si una cita es valida, descargar su constancia y filtrar la agenda por fecha o estado.</p>
+        <h1 class="form-title mt-3">Agenda y seguimiento de citas</h1>
+        <p class="form-subtitle">Busca una cita por codigo, filtra la agenda y asigna responsables sin salir de esta pantalla.</p>
     </section>
 
     <div class="flash-wrap">
@@ -91,6 +93,7 @@
         <div class="table-title">
             <h3>Buscar por codigo</h3>
         </div>
+        <div class="form-helper-card mb-3">Usa este campo cuando el cliente llegue con su codigo o constancia PDF.</div>
         <form action="admin-citas" method="get" class="user-form-grid">
             <input type="hidden" name="accion" value="buscar">
             <div>
@@ -107,6 +110,7 @@
         <div class="table-title">
             <h3>Agenda y filtros</h3>
         </div>
+        <div class="form-helper-card mb-3">Filtra por fecha o estado para revisar la carga diaria y priorizar citas pendientes.</div>
         <form action="admin-citas" method="get" class="filter-grid">
             <div>
                 <label for="fechaCita" class="form-label">Fecha de cita</label>
@@ -261,7 +265,13 @@
                 <% }
                 } else { %>
                 <tr>
-                    <td colspan="10">No hay citas registradas para los filtros actuales.</td>
+                    <td colspan="10">
+                        <div class="empty-state">
+                            <h4>No hay citas para los filtros actuales</h4>
+                            <p>Cambia la fecha o selecciona todos los estados para ampliar la busqueda.</p>
+                            <a href="admin-citas" class="app-button app-button-primary">Limpiar filtros</a>
+                        </div>
+                    </td>
                 </tr>
                 <% } %>
                 </tbody>
